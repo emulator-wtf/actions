@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/"
+    directory: "/invoke-session"
     schedule:
       interval: "weekly"
       time: "16:00"
@@ -9,7 +9,7 @@ updates:
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
   - package-ecosystem: "github-actions"
-    directory: "/"
+    directory: "/invoke-session"
     schedule:
       interval: "weekly"
       time: "16:00"
