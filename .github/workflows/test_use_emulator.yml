@@ -5,7 +5,10 @@ permissions:
   id-token: write
   pull-requests: write
 on:
-  workflow_dispatch:
+  pull_request:
+    paths:
+      - use-emulator/**
+      - .github/workflows/test_use_emulator.yml
 jobs:
   test:
     runs-on: ubuntu-latest
