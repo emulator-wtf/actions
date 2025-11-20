@@ -1,0 +1,19 @@
+{
+  "name": "invoke-session",
+  "version": "0.0.1",
+  "description": "Github action to start an Android emulator session with emulator.wtf",
+  "scripts": {
+    "build": "rimraf dist && tsc"
+  },
+  "homepage": "https://github.com/emulator-wtf/actions/invoke-session",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/exec": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.22",
+    "typescript": "^5.9.3",
+    "rimraf": "^6.1.0"
+  }
+}
