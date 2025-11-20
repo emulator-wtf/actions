@@ -1,0 +1,7 @@
+# IDEA stuff
+/out/
+/.idea/
+/swarm/emu-grpc/encoder-jni/.idea/
+*.iml
+out/
+
