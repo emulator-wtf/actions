@@ -1,4 +1,4 @@
-name: Test use-emulator
+name: Test invoke-session
 permissions:
   contents: read
   checks: write
