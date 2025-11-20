@@ -20,7 +20,7 @@ jobs:
     - uses: actions/checkout@v5
     - uses: emulator-wtf/configure-credentials@v1
       with:
-        oidc-configuration-id: ${{ vars.EW_OIDC_ID_PUBLIC }}
+        oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
     - name: Setup ew-cli
       uses: emulator-wtf/setup-ew-cli@v0.9.11
       with:
