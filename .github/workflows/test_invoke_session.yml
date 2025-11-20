@@ -7,7 +7,7 @@ permissions:
 on:
   pull_request:
     paths:
-      - .github/actions/invoke-session/**
+      - invoke-session/**
       - .github/workflows/test_invoke_session.yml
 jobs:
   test:
@@ -20,14 +20,14 @@ jobs:
     - uses: actions/checkout@v5
     - uses: emulator-wtf/configure-credentials@v1
       with:
-        oidc-configuration-id: ${{ vars.EW_OIDC_ID_PRIVATE }}
+        oidc-configuration-id: ${{ vars.EW_OIDC_ID_PUBLIC }}
     - name: Setup ew-cli
       uses: emulator-wtf/setup-ew-cli@v0.9.11
       with:
         version: 1.0.1
     - name: Run emulator session
       id: ew-cli
-      uses: ./.github/actions/invoke-session
+      uses: ./invoke-session
       with:
         devices: model=Pixel2,version=33,gpu=auto
     - name: Print adb ports
