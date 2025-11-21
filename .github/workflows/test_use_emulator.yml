@@ -1,0 +1,36 @@
+name: Test use-emulator
+permissions:
+  contents: read
+  checks: write
+  id-token: write
+  pull-requests: write
+on:
+  pull_request:
+    paths:
+      - use-emulator/**
+      - .github/workflows/test_use_emulator.yml
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    # PREP
+    - uses: actions/checkout@v5
+    - uses: emulator-wtf/configure-credentials@v1
+      with:
+        oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
+    - uses: ./use-emulator
+      id: ew-cli
+      with:
+        devices: model=Pixel2,version=33,gpu=auto
+    - name: Print adb ports
+      run: |
+        echo "Attached ${{ steps.ew-cli.outputs.adb_attached }}"
+        echo "Attached json ${{ steps.ew-cli.outputs.adb_attached_json }}"
+        echo "Forwarded ${{ steps.ew-cli.outputs.adb_port_forwarded }}"
+        echo "Forwarded json ${{ steps.ew-cli.outputs.adb_port_forwarded_json }}"
+    - name: Validate adb connection
+      run: |
+        $ANDROID_HOME/platform-tools/adb shell whoami
