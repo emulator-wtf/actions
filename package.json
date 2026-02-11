@@ -1,11 +1,12 @@
 {
-  "name": "invoke-session",
+  "name": "@emulator-wtf/actions",
   "version": "0.0.1",
-  "description": "Github action to start an Android emulator session with emulator.wtf",
+  "description": "emulator.wtf GitHub actions",
+  "type": "module",
   "scripts": {
     "build": "rimraf dist && tsc"
   },
-  "homepage": "https://github.com/emulator-wtf/actions/invoke-session",
+  "homepage": "https://github.com/emulator-wtf/actions",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^3.0.0",
