@@ -12,7 +12,7 @@
     "@actions/exec": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^20.19.32",
+    "@types/node": "^20.19.33",
     "typescript": "^5.9.3",
     "rimraf": "^6.1.2"
   }
