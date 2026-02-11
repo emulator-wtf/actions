@@ -138,4 +138,4 @@ function waitForJson(stdout, adbEnabled, numberOfDevices) {
     });
 }
 invoke();
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=invoke-session-main.js.map
