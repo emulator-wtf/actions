@@ -21,6 +21,15 @@ jobs:
     - uses: emulator-wtf/configure-credentials@v1
       with:
         oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
+    - name: Setup Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24'
+    - uses: jdx/mise-action@v3
+      with:
+        install: false
+    - name: Rebuild
+      run: mise dist
     - uses: ./use-emulator
       id: ew-cli
       with:

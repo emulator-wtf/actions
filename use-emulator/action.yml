@@ -74,7 +74,7 @@ runs:
         version: ${{ inputs.version }}
     - name: Run emulator session
       id: cli_run
-      uses: emulator-wtf/actions/invoke-session@v0
+      uses: ../invoke-session
       with:
         #Session options
         # Authentication
