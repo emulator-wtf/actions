@@ -7,7 +7,9 @@ permissions:
 on:
   pull_request:
     paths:
-      - invoke-session/**
+      - src/**
+      - node_modules/**
+      - '*.json'
       - .github/workflows/test_invoke_session.yml
 jobs:
   test:
@@ -21,6 +23,15 @@ jobs:
     - uses: emulator-wtf/configure-credentials@v1
       with:
         oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
+    - name: Setup Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24'
+    - uses: jdx/mise-action@v3
+      with:
+        install: false
+    - name: Rebuild
+      run: mise dist
     - name: Setup ew-cli
       uses: emulator-wtf/setup-ew-cli@v0.9.11
       with:
