@@ -9,7 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^3.0.0",
-    "@actions/exec": "^1.1.1"
+    "@actions/exec": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.19.32",
