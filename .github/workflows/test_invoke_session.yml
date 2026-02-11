@@ -10,6 +10,7 @@ on:
       - src/**
       - node_modules/**
       - '*.json'
+      - invoke-session/**
       - .github/workflows/test_invoke_session.yml
 jobs:
   test:
