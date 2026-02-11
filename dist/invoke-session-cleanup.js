@@ -31,4 +31,4 @@ function getProcessTree(pid, currentDepth) {
     return pids;
 }
 invoke();
-//# sourceMappingURL=cleanup.js.map
+//# sourceMappingURL=invoke-session-cleanup.js.map
