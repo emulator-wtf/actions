@@ -6,9 +6,6 @@ permissions:
   pull-requests: write
 on:
   pull_request:
-    paths:
-      - invoke-session/**
-      - .github/workflows/test_invoke_session.yml
 jobs:
   test:
     runs-on: ubuntu-latest
