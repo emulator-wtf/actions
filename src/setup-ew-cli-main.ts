@@ -30,7 +30,7 @@ async function setup() {
         await promises.copyFile(`${cachedCli}/ew-cli`, executable);
       }
     }
-    chmodSync(executable, "755");
+    chmodSync(executable, 0o755);
     addPath(binPath);
 
     const cachedJar = find('emulatorwtf-jar', version);
