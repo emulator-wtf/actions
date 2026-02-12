@@ -1,8 +1,8 @@
 import { getInput, setFailed, warning } from '@actions/core'
 
-import setupEwCli from './setup-ew-cli'
-import {invokeSession} from "./invoke-session";
-import {getInvokeSessionInputs} from "./invoke-session/inputs";
+import setupEwCli from '../setup-ew-cli/index.js'
+import { invokeSession } from '../invoke-session/index.js'
+import { getInvokeSessionInputs } from '../invoke-session/inputs.js'
 
 
 (async () => {

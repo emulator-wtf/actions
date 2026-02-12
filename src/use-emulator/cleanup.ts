@@ -1,3 +1,3 @@
-import { cleanupInvokeSession } from './invoke-session'
+import { cleanupInvokeSession } from '../invoke-session/index.js'
 
 cleanupInvokeSession()
