@@ -1,0 +1,81 @@
+name: 'use-emulator'
+description: 'Github action for obtaining an emulator session for use during a CI run'
+author: 'emulator.wtf'
+inputs:
+  # ew-cli
+  version:
+    description: 'ew-cli version to use'
+    required: true
+    default: '1.0.1'
+  # Authentication
+  api-token:
+    description: 'Api token for emulator.wtf'
+    required: false
+    # Session configuration
+  devices:
+    description: 'Device configurations to use, in the form of model=X,version=Y per line'
+    required: false
+  max-time-limit:
+    description: 'Max time until the emulator session is canceled, expressed by a number followed by a unit (h, m or s), with the maximum value being 8h and minimum value being 60s (default: 1h)'
+    required: false
+  adb:
+    description: 'Will automatically connect/disconnect the adb-server to the locally forwarded adb port.'
+    required: false
+    default: 'true'
+  adb-binary:
+    description: 'Path to the adb binary to use. If not specified, ew-cli will try to discover it in the `ANDROID_HOME` or `ANDROID_SDK_ROOT` environment variables, or on the `PATH`.'
+    required: false
+  # Session outputs
+  record-video:
+    description: 'Set to true to record video of the emulator session'
+    required: false
+  outputs:
+    description: 'Comma-separated list to specify what to download to output-dir.'
+    required: false
+  outputs-dir:
+    description: 'Location to store emulator session outputs in'
+    required: false
+  # Network options (emulator)
+  dns-server:
+    description: 'DNS server(s) to use for the emulator, one per line. Can specify up to 4 servers. If not specified, the emulator will use default DNS servers.'
+    required: false
+  dns-override:
+    description: 'Hard-code specific hostname-ip combinations, one per line in the form of hostname=ip (e.g. example.com=10.0.0.1)'
+    required: false
+  egress-tunnel:
+    description: 'Set to true to enable tunneling outgoing internet traffic from the emulator to the action. This will redirect all network traffic as if you were running the emulator within the action.'
+    required: false
+  egress-localhost-fwd-ip:
+    description: "When using the egress tunnel, make this action's localhost available to the emulator under the specified IP address (should NOT be a public IP, loopback IP or broadcast IP)"
+    required: false
+  # Network options (action)
+  proxy-host:
+    description: "Configure a proxy host to use for all requests when making emulator.wtf API calls."
+    required: false
+  proxy-port:
+    description: "Configure a proxy port to use for all requests when making emulator.wtf API calls."
+    required: false
+  proxy-user:
+    description: "Set the proxy user to use for authentication."
+    required: false
+  proxy-password:
+    description: "Set the proxy password to use for authentication."
+    required: false
+  # Operation
+branding:
+  color: orange
+  icon: smartphone
+runs:
+  using: node24
+  main: ../dist/use-emulator/main.js
+  post: ../dist/use-emulator/cleanup.js
+  post-if: always()
+outputs:
+  adb_attached:
+    description: "Comma separated list of adb attached ports. Not filled when 'adb: false' option is used."
+  adb_attached_json:
+    description: "List of adb attached ports in JSON format. Not filled when 'adb: false' option is used."
+  adb_port_forwarded:
+    description: "Comma separated list of forwarded adb ports. Useful when 'adb: false' option is used."
+  adb_port_forwarded_json:
+    description: "List of forwarded adb ports in JSON format. Useful when 'adb: false' option is used."

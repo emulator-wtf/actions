@@ -1,0 +1,21 @@
+{
+  "name": "@emulator-wtf/actions",
+  "version": "0.0.1",
+  "description": "emulator.wtf GitHub actions",
+  "type": "module",
+  "scripts": {
+    "build": "rimraf dist && tsc"
+  },
+  "homepage": "https://github.com/emulator-wtf/actions",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^3.0.0",
+    "@actions/exec": "^3.0.0",
+    "@actions/tool-cache": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.33",
+    "typescript": "^5.9.3",
+    "rimraf": "^6.1.2"
+  }
+}
