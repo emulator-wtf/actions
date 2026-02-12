@@ -113,7 +113,6 @@ export async function invokeSession(inputs: InvokeSessionInputs) {
     saveState("ew_cli_pid", ewCli.pid)
 
     ewCli.unref()
-    process.exit(0)
   } catch (e) {
     warning(`ew-cli invoke failed: ${e}`)
     setFailed(e)
@@ -122,6 +121,11 @@ export async function invokeSession(inputs: InvokeSessionInputs) {
 
 export async function cleanup() {
   const pid = getState("ew_cli_pid")
+  if (pid === undefined || pid.trim().length === 0) {
+    info("No ew-cli process to cleanup")
+    return
+  }
+
   const pids = getProcessTree(pid, 0)
   info(`Killing ${pids.length} processes`)
   // reverse pids so that child processes get the signal first

@@ -1,4 +1,11 @@
 import { invokeSession } from './index.js'
 import { getInvokeSessionInputs } from './inputs.js'
+import { setFailed } from '@actions/core'
 
-invokeSession(getInvokeSessionInputs())
+try {
+  invokeSession(getInvokeSessionInputs())
+} catch (error) {
+  warning(`invoke-session failed: ${e}`)
+  setFailed(e)
+}
+process.exit(0)
