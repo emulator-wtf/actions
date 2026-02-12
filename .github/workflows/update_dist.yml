@@ -49,11 +49,11 @@ jobs:
         find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
 
         # Copy specified directories
-        cp -r ../source/dist .
-        cp -r ../source/invoke-session .
-        cp -r ../source/node_modules .
-        cp -r ../source/setup-ew-cli .
-        cp -r ../source/use-emulator .
+        cp -a ../source/dist .
+        cp -a ../source/invoke-session .
+        cp -a ../source/node_modules .
+        cp -a ../source/setup-ew-cli .
+        cp -a ../source/use-emulator .
 
         # Copy specified files
         cp ../source/LICENSE .
