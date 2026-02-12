@@ -15,11 +15,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
     steps:
-    # PREP
     - uses: actions/checkout@v6
     - uses: emulator-wtf/configure-credentials@v1
       with:

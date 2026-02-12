@@ -7,24 +7,29 @@ permissions:
 on:
   pull_request:
     paths:
-      - use-emulator/**
-      - .github/workflows/test_use_emulator.yml
+    - src/**
+    - node_modules/**
+    - '*.json'
+    - use-emulator/**
+    - .github/workflows/test_use_emulator.yml
 jobs:
   test:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
     steps:
-    # PREP
     - uses: actions/checkout@v6
     - uses: emulator-wtf/configure-credentials@v1
       with:
         oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
+    - name: Setup Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24'
+    - uses: jdx/mise-action@v3
+      with:
+        install: false
+    - run: mise dist
     - uses: ./use-emulator
       id: ew-cli
-      with:
-        devices: model=Pixel2,version=33,gpu=auto
     - name: Print adb ports
       run: |
         echo "Attached ${{ steps.ew-cli.outputs.adb_attached }}"
