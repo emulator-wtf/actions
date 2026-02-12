@@ -1,0 +1,13 @@
+name: setup-ew-cli
+description: Setup the ew-cli command to run Android instrumentation tests with emulator.wtf
+inputs:
+  version:
+    description: Version of ew-cli to install
+    required: false
+    default: 1.1.0
+branding:
+  color: orange
+  icon: smartphone
+runs:
+  using: node24
+  main: dist/setup-ew-cli-main.js
