@@ -1,0 +1,77 @@
+name: Update dist branch
+
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-dist:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout main
+      uses: actions/checkout@v6
+      with:
+        path: source
+
+    - name: Setup Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24'
+
+    - name: Setup mise
+      uses: jdx/mise-action@v3
+      with:
+        install: false
+
+    - name: Build dist
+      working-directory: source
+      run: mise dist
+
+    - name: Checkout dist branch
+      uses: actions/checkout@v6
+      with:
+        ref: dist
+        path: dist-branch
+
+    - name: Sync files to dist branch
+      run: |
+        cd dist-branch
+        # Remove everything except .git
+        find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+
+        # Copy specified directories
+        cp -r ../source/dist .
+        cp -r ../source/invoke-session .
+        cp -r ../source/node_modules .
+        cp -r ../source/setup-ew-cli .
+        cp -r ../source/use-emulator .
+
+        # Copy specified files
+        cp ../source/LICENSE .
+        cp ../source/package.json .
+        cp ../source/package-lock.json .
+        cp ../source/tsconfig.json .
+
+    - name: Commit and push
+      working-directory: dist-branch
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+        MAIN_SHA="${{ github.sha }}"
+
+        git add -A
+
+        # Check if there are changes to commit
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+          exit 0
+        fi
+
+        git commit -m "ci: build latest dist from ($MAIN_SHA)"
+        git push --ff-only
