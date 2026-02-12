@@ -2,7 +2,6 @@ import {
   getState,
   info,
   saveState,
-  setFailed,
   setOutput,
   warning
 } from '@actions/core'
@@ -17,9 +16,7 @@ export async function invokeSession(inputs: InvokeSessionInputs) {
     const args = ['start-session', '--json']
 
     if (inputs.token === undefined && process.env['EW_API_TOKEN'] === undefined) {
-      warning('api-token or EW_API_TOKEN env var must be specified')
-      setFailed('api-token or EW_API_TOKEN env var must be specified')
-      return
+      throw new Error('api-token or EW_API_TOKEN env var must be specified')
     }
 
     if (inputs.token !== undefined) {
@@ -115,11 +112,11 @@ export async function invokeSession(inputs: InvokeSessionInputs) {
     ewCli.unref()
   } catch (e) {
     warning(`ew-cli invoke failed: ${e}`)
-    setFailed(e)
+    throw e
   }
 }
 
-export async function cleanup() {
+export async function cleanupInvokeSession() {
   const pid = getState("ew_cli_pid")
   if (pid === undefined || pid.trim().length === 0) {
     info("No ew-cli process to cleanup")

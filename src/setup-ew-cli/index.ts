@@ -1,7 +1,7 @@
 import { chmodSync, existsSync, promises } from 'fs';
 import { env } from 'process';
 
-import { addPath, debug, exportVariable, setFailed, warning } from '@actions/core';
+import { addPath, debug, exportVariable, warning } from '@actions/core';
 import { exec } from '@actions/exec';
 import { cacheFile, downloadTool, find } from '@actions/tool-cache';
 
@@ -47,6 +47,6 @@ export default async function setupEwCli(version: string) {
     }
   } catch (e) {
     warning(`ew-cli installation failed: ${e}`);
-    setFailed(e);
+    throw e
   }
 }

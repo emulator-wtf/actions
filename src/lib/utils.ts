@@ -27,3 +27,13 @@ export function undefinedIfEmpty(value: string | undefined): string | undefined 
   }
   return value
 }
+
+export function extractErrorMessage(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message
+  }
+  if (typeof error === 'string') {
+    return error
+  }
+  return 'An unknown error occurred: ' + JSON.stringify(error)
+}

@@ -66,48 +66,16 @@ branding:
   color: orange
   icon: smartphone
 runs:
-  using: composite
-  steps:
-    - name: Setup ew-cli
-      uses: emulator-wtf/setup-ew-cli@v0.9.11
-      with:
-        version: ${{ inputs.version }}
-    - name: Run emulator session
-      id: cli_run
-      uses: emulator-wtf/actions/invoke-session@v0
-      with:
-        #Session options
-        # Authentication
-        api-token: ${{ inputs.api-token }}
-        # Session configuration
-        devices: ${{ inputs.devices }}
-        max-time-limit: ${{ inputs.max-time-limit }}
-        adb: ${{ inputs.adb }}
-        adb-binary: ${{ inputs.adb-binary }}
-        # Session outputs
-        record-video: ${{ inputs.record-video }}
-        outputs: ${{ inputs.outputs }}
-        outputs-dir: ${{ inputs.outputs-dir }}
-        # Network options (emulator)
-        dns-server: ${{ inputs.dns-server }}
-        dns-override: ${{ inputs.dns-override }}
-        egress-tunnel: ${{ inputs.egress-tunnel }}
-        egress-localhost-fwd-ip: ${{ inputs.egress-localhost-fwd-ip }}
-        # Network options (action)
-        proxy-host: ${{ inputs.proxy-host }}
-        proxy-port: ${{ inputs.proxy-port }}
-        proxy-user: ${{ inputs.proxy-user }}
-        proxy-password: ${{ inputs.proxy-password }}
+  using: node24
+  main: ../dist/use-emulator/main.js
+  post: ../dist/use-emulator/cleanup.js
+  post-if: always()
 outputs:
   adb_attached:
     description: "Comma separated list of adb attached ports. Not filled when 'adb: false' option is used."
-    value: ${{steps.cli_run.outputs.adb_attached}}
   adb_attached_json:
     description: "List of adb attached ports in JSON format. Not filled when 'adb: false' option is used."
-    value: ${{steps.cli_run.outputs.adb_attached_json}}
   adb_port_forwarded:
     description: "Comma separated list of forwarded adb ports. Useful when 'adb: false' option is used."
-    value: ${{steps.cli_run.outputs.adb_port_forwarded}}
   adb_port_forwarded_json:
     description: "List of forwarded adb ports in JSON format. Useful when 'adb: false' option is used."
-    value: ${{steps.cli_run.outputs.adb_port_forwarded_json}}

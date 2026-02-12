@@ -62,3 +62,4 @@ runs:
   using: node24
   main: ../dist/invoke-session/main.js
   post: ../dist/invoke-session/cleanup.js
+  post-if: always()
