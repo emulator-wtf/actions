@@ -69,6 +69,7 @@ runs:
   using: node24
   main: ../dist/use-emulator/main.js
   post: ../dist/use-emulator/cleanup.js
+  post-if: always()
 outputs:
   adb_attached:
     description: "Comma separated list of adb attached ports. Not filled when 'adb: false' option is used."
