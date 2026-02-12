@@ -10,4 +10,4 @@ branding:
   icon: smartphone
 runs:
   using: node24
-  main: dist/setup-ew-cli-main.js
+  main: ../dist/setup-ew-cli-main.js
