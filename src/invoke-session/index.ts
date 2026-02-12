@@ -119,7 +119,7 @@ export async function invokeSession(inputs: InvokeSessionInputs) {
   }
 }
 
-export async function cleanup() {
+export async function cleanupInvokeSession() {
   const pid = getState("ew_cli_pid")
   if (pid === undefined || pid.trim().length === 0) {
     info("No ew-cli process to cleanup")
