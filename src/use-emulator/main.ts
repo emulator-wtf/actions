@@ -8,7 +8,7 @@ import { getInvokeSessionInputs } from '../invoke-session/inputs.js'
 (async () => {
   try {
     const version = getInput('version')
-    setupEwCli(version)
+    await setupEwCli(version)
     await invokeSession(getInvokeSessionInputs())
     process.exit(0)
   } catch (error) {
