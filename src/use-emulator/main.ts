@@ -10,7 +10,7 @@ import { getInvokeSessionInputs } from '../invoke-session/inputs.js'
     const version = getInput('version')
     await setupEwCli(version)
     await invokeSession(getInvokeSessionInputs())
-    // process.exit(0)
+    process.exit(0)
   } catch (error) {
     warning(`use-emulator failed: ${error}`)
     setFailed(error)
