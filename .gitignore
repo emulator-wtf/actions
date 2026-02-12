@@ -1,3 +1,5 @@
 # IDEA stuff
 /.idea/
 *.iml
+/dist/
+/node_modules/
