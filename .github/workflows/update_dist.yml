@@ -74,4 +74,4 @@ jobs:
         fi
 
         git commit -m "ci: build latest dist from ($MAIN_SHA)"
-        git push --ff-only
+        git push --ff-only origin HEAD:dist
