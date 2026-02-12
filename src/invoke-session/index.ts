@@ -106,7 +106,7 @@ export async function invokeSession(inputs: InvokeSessionInputs) {
       info(`${data}`)
     });
 
-    const adbPorts = await waitForJson(stdout, inputs.adbEnabled, inputs.devices?.length ?? 1)
+    const adbPorts = await waitForJson(stdout, inputs.adbEnabled ?? true, inputs.devices?.length ?? 1)
 
     info("Finished waiting for adb")
     setOutputs(adbPorts)
