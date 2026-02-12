@@ -26,8 +26,8 @@ async function setup() {
         await cacheFile(path, 'ew-cli', 'emulatorwtf-wrapper', version);
         await promises.copyFile(path, executable);
       } else {
-        debug(`ew-cli not found in cache!`);
-        await promises.copyFile(cachedCli, executable);
+        debug(`ew-cli found in cache, restoring....`);
+        await promises.copyFile(`${cachedCli}/ew-cli`, executable);
       }
     }
     chmodSync(executable, "755");
