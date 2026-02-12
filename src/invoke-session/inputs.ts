@@ -35,7 +35,7 @@ export function getInvokeSessionInputs(): InvokeSessionInputs {
 
     devices: getOptionalMultilineInput('devices'),
     maxTimeLimit: getOptionalStringInput('max-time-limit'),
-    adbEnabled: getOptionalBooleanInput('adb-enabled'),
+    adbEnabled: getOptionalBooleanInput('adb'),
     adbBinary: getOptionalStringInput('adb-binary'),
 
     proxyHost:  getOptionalStringInput('proxy-host'),
@@ -43,8 +43,8 @@ export function getInvokeSessionInputs(): InvokeSessionInputs {
     proxyUser: getOptionalStringInput('proxy-user'),
     proxyPass: getOptionalStringInput('proxy-password'),
 
-    dnsServers: getOptionalMultilineInput('dns-servers'),
-    dnsOverrides: getOptionalMultilineInput('dns-overrides'),
+    dnsServers: getOptionalMultilineInput('dns-server'),
+    dnsOverrides: getOptionalMultilineInput('dns-override'),
     egressTunnel: getOptionalBooleanInput('egress-tunnel'),
     egressLocalhostFwdIp: getOptionalStringInput('egress-localhost-fwd-ip'),
   }
