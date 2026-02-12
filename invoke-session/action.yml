@@ -60,5 +60,5 @@ branding:
   icon: smartphone
 runs:
   using: node24
-  main: ../dist/invoke-session-main.js
-  post: ../dist/invoke-session-cleanup.js
+  main: ../dist/invoke-session/main.js
+  post: ../dist/invoke-session/cleanup.js

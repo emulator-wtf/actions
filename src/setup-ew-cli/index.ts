@@ -1,15 +1,14 @@
 import { chmodSync, existsSync, promises } from 'fs';
 import { env } from 'process';
 
-import { addPath, debug, exportVariable, getInput, setFailed, warning } from '@actions/core';
+import { addPath, debug, exportVariable, setFailed, warning } from '@actions/core';
 import { exec } from '@actions/exec';
 import { cacheFile, downloadTool, find } from '@actions/tool-cache';
 
 const EW_CLI_URL = "https://maven.emulator.wtf/releases/ew-cli";
 
-async function setup() {
+export default async function setupEwCli(version: string) {
   try {
-    const version = getInput('version');
     exportVariable('EW_VERSION', version);
 
     const binPath = `${env.HOME}/.cache/emulator-wtf/bin`;
@@ -51,5 +50,3 @@ async function setup() {
     setFailed(e);
   }
 }
-
-void setup();
