@@ -19,9 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
-    - uses: ./configure-credentials
-      with:
-        oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
     - name: Setup Node
       uses: actions/setup-node@v6
       with:
@@ -31,6 +28,9 @@ jobs:
         install: false
     - name: Rebuild
       run: mise dist
+    - uses: ./configure-credentials
+      with:
+        oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
     - name: Setup ew-cli
       uses: ./setup-ew-cli
     - name: Run emulator session

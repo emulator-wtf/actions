@@ -21,9 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
-    - uses: ./configure-credentials
-      with:
-        oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
     - name: Setup Node
       uses: actions/setup-node@v6
       with:
@@ -32,6 +29,9 @@ jobs:
       with:
         install: false
     - run: mise dist
+    - uses: ./configure-credentials
+      with:
+        oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
     - uses: ./use-emulator
       id: ew-cli
     - name: Print adb ports
