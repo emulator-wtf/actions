@@ -1,6 +1,5 @@
 import {
   getOptionalBooleanInput,
-  getOptionalMultilineInput,
   getOptionalStringInput,
 } from '../lib/utils.js'
 import {
