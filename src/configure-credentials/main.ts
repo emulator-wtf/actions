@@ -2,7 +2,7 @@ import { getInput, getIDToken, exportVariable, setSecret, warning, setFailed } f
 import { authenticateOidc } from './api.js'
 import { extractErrorMessage } from '../lib/utils.js'
 
-async function run() {
+async function run(): Promise<void> {
   const oidcConfigurationUuid = getInput('oidc-configuration-id', { required: true })
 
   try {
@@ -19,7 +19,7 @@ async function run() {
     // check for "Unable to get ACTIONS_ID_TOKEN_REQUEST_URL env variable" error
     if (error instanceof Error && error.message.includes('Unable to get ACTIONS_ID_TOKEN_REQUEST_URL env variable')) {
       throw new Error("This action requires the 'id-token' permission to be set in the workflow. Please add the following to your workflow file:\n\n" +
-        "permissions:\n  id-token: write\n")
+        "permissions:\n  id-token: write\n", { cause: error })
     } else {
       throw error
     }
