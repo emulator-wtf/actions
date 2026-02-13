@@ -45,12 +45,10 @@ async function invoke(inputs: InvokeInputs) {
       args.push('--outputs', inputs.outputs);
     }
 
-    if (inputs.recordVideo !== '') {
-      if (inputs.getBooleanInput(recordVideo)) {
-        args.push('--record-video');
-      } else {
-        args.push('--no-record-video');
-      }
+    if (inputs.recordVideo !== false) {
+      args.push('--no-record-video');
+    } else {
+      args.push('--record-video');
     }
 
     if (inputs.timeout) {

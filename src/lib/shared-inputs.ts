@@ -1,4 +1,8 @@
-import {getOptionalBooleanInput, getOptionalMultilineInput} from "./utils";
+import {
+  getOptionalBooleanInput,
+  getOptionalMultilineInput,
+  getOptionalStringInput
+} from './utils.js';
 
 /**
  * Inputs related to configuring how the CLI connects to the network,
