@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v5
-    - uses: emulator-wtf/use-emulator@v0
+    - uses: emulator-wtf/actions/use-emulator@v1
       id: ew-cli
       with:
         devices: |
