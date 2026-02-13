@@ -29,7 +29,7 @@ jobs:
         install: false
     - run: mise dist
     - uses: ./setup-ew-cli
-    - uses: emulator-wtf/configure-credentials@v1
+    - uses: ./configure-credentials
       with:
         oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
     - run: curl -o minimal.apk -sS https://maven.emulator.wtf/releases/wtf/emulator/minimal/0.0.2/minimal-0.0.2.apk

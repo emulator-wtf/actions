@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
-    - uses: emulator-wtf/configure-credentials@v1
+    - uses: ./configure-credentials
       with:
         oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
     - name: Setup Node
@@ -32,9 +32,7 @@ jobs:
     - name: Rebuild
       run: mise dist
     - name: Setup ew-cli
-      uses: emulator-wtf/setup-ew-cli@v0.9.11
-      with:
-        version: 1.0.1
+      uses: ./setup-ew-cli
     - name: Run emulator session
       id: ew-cli
       uses: ./invoke-session
