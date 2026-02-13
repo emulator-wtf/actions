@@ -8,6 +8,7 @@ import {
 import { spawn, spawnSync } from 'node:child_process'
 import { Readable } from 'node:stream'
 import { InvokeSessionInputs } from './inputs.js'
+import { appendCliNetworkInputsToArgs, appendEmulatorConfigInputsToArgs } from '../lib/shared-inputs.js'
 
 const WAIT_TIMEOUT = 60000
 
@@ -35,12 +36,6 @@ export async function invokeSession(inputs: InvokeSessionInputs) {
       args.push('--record-video')
     }
 
-    if (inputs.devices !== undefined) {
-      inputs.devices.forEach(device => {
-        args.push('--device', device)
-      });
-    }
-
     if (inputs.maxTimeLimit !== undefined) {
       args.push('--max-time-limit', inputs.maxTimeLimit)
     }
@@ -53,41 +48,8 @@ export async function invokeSession(inputs: InvokeSessionInputs) {
       args.push('--adb-binary', inputs.adbBinary)
     }
 
-    if (inputs.proxyHost !== undefined) {
-      args.push('--proxy-host', inputs.proxyHost)
-    }
-
-    if (inputs.proxyPort !== undefined) {
-      args.push('--proxy-port', inputs.proxyPort)
-    }
-
-    if (inputs.proxyUser !== undefined) {
-      args.push('--proxy-user', inputs.proxyUser)
-    }
-
-    if (inputs.proxyPass !== undefined) {
-      args.push('--proxy-password', inputs.proxyPass)
-    }
-
-    if (inputs.dnsServers !== undefined) {
-      inputs.dnsServers.forEach(server => {
-        args.push('--dns-server', server)
-      });
-    }
-
-    if (inputs.dnsOverrides !== undefined) {
-      inputs.dnsOverrides.forEach(override => {
-        args.push('--dns-override', override)
-      });
-    }
-
-    if (inputs.egressTunnel === true) {
-      args.push('--egress-tunnel')
-    }
-
-    if (inputs.egressLocalhostFwdIp !== undefined) {
-      args.push('--egress-localhost-fwd-ip', inputs.egressLocalhostFwdIp)
-    }
+    appendCliNetworkInputsToArgs(inputs, args)
+    appendEmulatorConfigInputsToArgs(inputs, args)
 
     info(`Starting ew-cli`)
 

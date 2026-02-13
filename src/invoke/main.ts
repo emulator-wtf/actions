@@ -1,232 +1,146 @@
 import { getBooleanInput, getInput, getMultilineInput, setFailed, warning } from '@actions/core';
 import { exec } from '@actions/exec';
+import { InvokeInputs, getInvokeInputs } from './inputs.js';
+import { appendCliNetworkInputsToArgs, appendEmulatorConfigInputsToArgs } from '../lib/shared-inputs.js';
+import { extractErrorMessage } from '../lib/utils.js';
 
-async function invoke() {
+async function invoke(inputs: InvokeInputs) {
   try {
-    const token = getInput('api-token');
-    const appApk = getInput('app');
-    const testApk = getInput('test');
-    const libraryTestApk = getInput('library-test');
-    const outputsDir = getInput('outputs-dir');
-    const outputs = getInput('outputs');
-    const recordVideo = getInput('record-video');
-
-    const devices = getMultilineInput('devices').filter(x => x.length > 0);
-    const timeout = getInput('timeout')
-    const useOrchestrator = getInput('use-orchestrator') && getBooleanInput('use-orchestrator');
-    const testRunnerClass = getInput('test-runner-class');
-    const clearPackageData = getInput('clear-package-data') && getBooleanInput('clear-package-data');
-    const withCoverage = getInput('with-coverage') && getBooleanInput('with-coverage');
-    const testTargets = getMultilineInput('test-targets').map(x => x.trim()).filter(x => x.length > 0);
-
-    const additionalApks = getMultilineInput('additional-apks').filter(x => x.length > 0);
-    const environmentVariables = getMultilineInput('environment-variables').filter(x => x.length > 0);
-    const secretEnvironmentVariables = getMultilineInput('secret-environment-variables').filter(x => x.length > 0);
-
-    const shardTargetRuntime = getInput("shard-target-runtime");
-    const testcaseDurationHint = getInput("testcase-duration-hint");
-    const numUniformShards = getInput('num-uniform-shards');
-    const numShards = getInput('num-shards');
-    const numBalancedShards = getInput('num-balanced-shards');
-
-    const dirsToPull = getMultilineInput('directories-to-pull').filter(x => x.length > 0);
-
-    const sideEffects = getInput('side-effects') && getBooleanInput('side-effects');
-    const numFlakyTestAttempts = getInput('num-flaky-test-attempts');
-    const flakyTestRepeatMode = getInput('flaky-test-repeat-mode');
-
-    const fileCache = getInput('file-cache') ? getBooleanInput('file-cache') : true;
-    const fileCacheTtl = getInput('file-cache-ttl');
-    const testCache = getInput('test-cache') ? getBooleanInput('test-cache') : true;
-
-    const async = getInput('async') && getBooleanInput('async');
-
-    const displayName = getInput('display-name');
-
-    const proxyHost = getInput('proxy-host');
-    const proxyPort = getInput('proxy-port');
-    const proxyUser = getInput('proxy-user');
-    const proxyPass = getInput('proxy-password');
-
-    const dnsServers = getMultilineInput('dns-server').filter(x => x.length > 0);
-    const dnsOverrides = getMultilineInput('dns-override').filter(x => x.length > 0);
-    const egressTunnel = getInput('egress-tunnel') && getBooleanInput('egress-tunnel');
-    const egressLocalhostFwdIp = getInput('egress-localhost-fwd-ip');
-
     const args = [];
 
-    if (token === '' && process.env['EW_API_TOKEN'] === undefined) {
+    if (inputs.token === undefined && process.env['EW_API_TOKEN'] === undefined) {
       warning('api-token or EW_API_TOKEN env var must be specified');
       setFailed('api-token or EW_API_TOKEN env var must be specified');
       return;
     }
 
-    if (token !== '') {
-      args.push('--token', token);
+    if (inputs.token !== undefined) {
+      args.push('--token', inputs.token);
     }
 
-    if (libraryTestApk) {
-      if (appApk || testApk) {
+    if (inputs.libraryTestApk) {
+      if (inputs.appApk || inputs.testApk) {
         warning('library-test should be used without app and test');
         setFailed('library-test should be used without app and test');
         return;
       }
-      args.push('--library-test', libraryTestApk);
-    } else if (!appApk) {
+      args.push('--library-test', inputs.libraryTestApk);
+    } else if (!inputs.appApk) {
       warning('app must be specified');
       setFailed('app must be specified');
       return;
-    } else if (!testApk) {
+    } else if (!inputs.testApk) {
       warning('test must be specified');
       setFailed('test must be specified');
       return;
     } else {
-      args.push('--app', appApk, '--test', testApk);
+      args.push('--app', inputs.appApk, '--test', inputs.testApk);
     }
 
-    if (outputsDir) {
-      args.push('--outputs-dir', outputsDir);
+    if (inputs.outputsDir) {
+      args.push('--outputs-dir', inputs.outputsDir);
     }
 
-    if (outputs) {
-      args.push('--outputs', outputs);
+    if (inputs.outputs) {
+      args.push('--outputs', inputs.outputs);
     }
 
-    if (recordVideo !== '') {
-      if (getBooleanInput(recordVideo)) {
+    if (inputs.recordVideo !== '') {
+      if (inputs.getBooleanInput(recordVideo)) {
         args.push('--record-video');
       } else {
         args.push('--no-record-video');
       }
     }
 
-    if (devices) {
-      devices.forEach(device => {
-        args.push('--device', device);
-      });
+    if (inputs.timeout) {
+      args.push('--timeout', inputs.timeout);
     }
 
-    if (timeout) {
-      args.push('--timeout', timeout);
+    if (inputs.testTargets) {
+      args.push('--test-targets', inputs.testTargets.join(';'));
     }
 
-    if (testTargets) {
-      args.push('--test-targets', testTargets.join(';'));
+    if (inputs.displayName) {
+      args.push('--display-name', inputs.displayName);
     }
 
-    if (displayName) {
-      args.push('--display-name', displayName);
-    }
-
-    if (useOrchestrator) {
+    if (inputs.useOrchestrator) {
       args.push('--use-orchestrator');
     }
 
-    if (testRunnerClass) {
-      args.push('--test-runner-class', testRunnerClass);
+    if (inputs.testRunnerClass) {
+      args.push('--test-runner-class', inputs.testRunnerClass);
     }
 
-    if (clearPackageData) {
+    if (inputs.clearPackageData) {
       args.push('--clear-package-data');
     }
 
-    if (withCoverage) {
+    if (inputs.withCoverage) {
       args.push('--with-coverage');
     }
 
-    if (additionalApks.length > 0) {
-      args.push('--additional-apks', additionalApks.join(','));
+    if (inputs.additionalApks.length > 0) {
+      args.push('--additional-apks', inputs.additionalApks.join(','));
     }
 
-    if (environmentVariables.length > 0) {
-      args.push('--environment-variables', environmentVariables.join(','));
+    if (inputs.environmentVariables.length > 0) {
+      args.push('--environment-variables', inputs.environmentVariables.join(','));
     }
 
-    if (secretEnvironmentVariables.length > 0) {
-      args.push('--secret-environment-variables', secretEnvironmentVariables.join(','));
+    if (inputs.secretEnvironmentVariables.length > 0) {
+      args.push('--secret-environment-variables', inputs.secretEnvironmentVariables.join(','));
     }
 
-    if (shardTargetRuntime) {
-      args.push('--shard-target-runtime', shardTargetRuntime);
-    } else if (numBalancedShards) {
-      args.push('--num-balanced-shards', numBalancedShards);
-    } else if (numShards) {
-      args.push('--num-shards', numShards);
-    } else if (numUniformShards) {
-      args.push('--num-uniform-shards', numUniformShards);
+    if (inputs.shardTargetRuntime) {
+      args.push('--shard-target-runtime', inputs.shardTargetRuntime);
+    } else if (inputs.numBalancedShards) {
+      args.push('--num-balanced-shards', inputs.numBalancedShards);
+    } else if (inputs.numShards) {
+      args.push('--num-shards', inputs.numShards);
+    } else if (inputs.numUniformShards) {
+      args.push('--num-uniform-shards', inputs.numUniformShards);
     }
 
-    if (testcaseDurationHint) {
-      args.push('--testcase-duration-hint', testcaseDurationHint);
+    if (inputs.testcaseDurationHint) {
+      args.push('--testcase-duration-hint', inputs.testcaseDurationHint);
     }
 
-    if (dirsToPull.length > 0) {
-      args.push('--directories-to-pull', dirsToPull.join(','));
+    if (inputs.dirsToPull.length > 0) {
+      args.push('--directories-to-pull', inputs.dirsToPull.join(','));
     }
 
-    if (sideEffects) {
+    if (inputs.sideEffects) {
       args.push('--side-effects');
     }
 
-    if (numFlakyTestAttempts) {
-      args.push('--num-flaky-test-attempts', numFlakyTestAttempts);
+    if (inputs.numFlakyTestAttempts) {
+      args.push('--num-flaky-test-attempts', inputs.numFlakyTestAttempts);
     }
 
-    if (flakyTestRepeatMode) {
-      args.push('--flaky-test-repeat-mode', flakyTestRepeatMode);
+    if (inputs.flakyTestRepeatMode) {
+      args.push('--flaky-test-repeat-mode', inputs.flakyTestRepeatMode);
     }
 
-    if (!fileCache) {
+    if (inputs.fileCache === false) {
       args.push('--no-file-cache');
     }
 
-    if (fileCacheTtl) {
-      args.push('--file-cache-ttl', fileCacheTtl);
+    if (inputs.fileCacheTtl) {
+      args.push('--file-cache-ttl', inputs.fileCacheTtl);
     }
 
-    if (!testCache) {
+    if (inputs.testCache === false) {
       args.push('--no-test-cache');
     }
 
-    if (async) {
+    if (inputs.async) {
       args.push('--async');
     }
 
-    if (proxyHost) {
-      args.push('--proxy-host', proxyHost);
-    }
-
-    if (proxyPort) {
-      args.push('--proxy-port', proxyPort);
-    }
-
-    if (proxyUser) {
-      args.push('--proxy-user', proxyUser);
-    }
-
-    if (proxyPass) {
-      args.push('--proxy-password', proxyPass);
-    }
-
-    if (dnsServers.length > 0) {
-      dnsServers.forEach(server => {
-        args.push('--dns-server', server);
-      });
-    }
-
-    if (dnsOverrides.length > 0) {
-      dnsOverrides.forEach(override => {
-        args.push('--dns-override', override);
-      });
-    }
-
-    if (egressTunnel) {
-      args.push('--egress-tunnel');
-    }
-
-    if (egressLocalhostFwdIp) {
-      args.push('--egress-localhost-fwd-ip', egressLocalhostFwdIp);
-    }
+    appendCliNetworkInputsToArgs(inputs, args)
+    appendEmulatorConfigInputsToArgs(inputs, args)
 
     args.push('--ew-integration', 'github-action 0.9.5');
 
@@ -237,4 +151,9 @@ async function invoke() {
   }
 }
 
-invoke();
+try {
+  invoke(getInvokeInputs());
+} catch (e) {
+  warning(`invoke failed: ${e}`)
+  setFailed(extractErrorMessage(e))
+}

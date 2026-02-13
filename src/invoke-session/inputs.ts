@@ -3,49 +3,39 @@ import {
   getOptionalMultilineInput,
   getOptionalStringInput,
 } from '../lib/utils.js'
+import {
+  CliNetworkInputs,
+  EmulatorConfigInputs,
+  getCliNetworkInputs,
+  getEmulatorConfigInputs,
+} from '../lib/shared-inputs.js'
 
-export interface InvokeSessionInputs {
+export interface InvokeSessionInputs extends CliNetworkInputs, EmulatorConfigInputs {
   token?: string
   outputsDir?: string
   outputs?: string
   recordVideo?: boolean
 
-  devices?: string[]
   maxTimeLimit?: string
   adbEnabled?: boolean
   adbBinary?: string
-
-  proxyHost?: string
-  proxyPort?: string
-  proxyUser?: string
-  proxyPass?: string
-
-  dnsServers?: string[]
-  dnsOverrides?: string[]
-  egressTunnel?: boolean
-  egressLocalhostFwdIp?: string
 }
 
 export function getInvokeSessionInputs(): InvokeSessionInputs {
+  const cliNetworkInputs = getCliNetworkInputs()
+  const emulatorConfigInputs = getEmulatorConfigInputs()
+
   return {
     token: getOptionalStringInput('api-token'),
     outputsDir: getOptionalStringInput('outputs-dir'),
     outputs: getOptionalStringInput('outputs'),
     recordVideo: getOptionalBooleanInput('record-video'),
 
-    devices: getOptionalMultilineInput('devices'),
     maxTimeLimit: getOptionalStringInput('max-time-limit'),
     adbEnabled: getOptionalBooleanInput('adb'),
     adbBinary: getOptionalStringInput('adb-binary'),
 
-    proxyHost:  getOptionalStringInput('proxy-host'),
-    proxyPort: getOptionalStringInput('proxy-port'),
-    proxyUser: getOptionalStringInput('proxy-user'),
-    proxyPass: getOptionalStringInput('proxy-password'),
-
-    dnsServers: getOptionalMultilineInput('dns-server'),
-    dnsOverrides: getOptionalMultilineInput('dns-override'),
-    egressTunnel: getOptionalBooleanInput('egress-tunnel'),
-    egressLocalhostFwdIp: getOptionalStringInput('egress-localhost-fwd-ip'),
+    ...cliNetworkInputs,
+    ...emulatorConfigInputs,
   }
 }
