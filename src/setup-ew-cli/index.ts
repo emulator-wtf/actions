@@ -1,5 +1,5 @@
-import { chmodSync, existsSync, promises } from 'fs';
-import { env } from 'process';
+import { chmodSync, existsSync, promises } from 'node:fs';
+import { env } from 'node:process';
 
 import { addPath, debug, exportVariable, warning } from '@actions/core';
 import { exec } from '@actions/exec';
@@ -36,7 +36,7 @@ export default async function setupEwCli(version: string) {
     debug(`looking for jar in cache!`);
     if (cachedJar) {
       debug(`Jar found in cache!`);
-      await promises.copyFile(cachedJar + "/ew-cli.jar", `${env.HOME}/.cache/emulator-wtf/ew-cli-${version}.jar`);
+      await promises.copyFile(`${cachedJar  }/ew-cli.jar`, `${env.HOME}/.cache/emulator-wtf/ew-cli-${version}.jar`);
     }
 
     await exec('ew-cli --version');

@@ -4,8 +4,8 @@ import {
   getOptionalStringInput,
 } from '../lib/utils.js'
 import {
-  CliNetworkInputs,
-  EmulatorConfigInputs,
+  type CliNetworkInputs,
+  type EmulatorConfigInputs,
   getCliNetworkInputs,
   getEmulatorConfigInputs,
 } from '../lib/shared-inputs.js'

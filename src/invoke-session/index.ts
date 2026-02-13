@@ -6,8 +6,8 @@ import {
   warning
 } from '@actions/core'
 import { spawn, spawnSync } from 'node:child_process'
-import { Readable } from 'node:stream'
-import { InvokeSessionInputs } from './inputs.js'
+import type { Readable } from 'node:stream'
+import type { InvokeSessionInputs } from './inputs.js'
 import { appendCliNetworkInputsToArgs, appendEmulatorConfigInputsToArgs } from '../lib/shared-inputs.js'
 
 const WAIT_TIMEOUT = 60000
@@ -16,7 +16,7 @@ export async function invokeSession(inputs: InvokeSessionInputs) {
   try {
     const args = ['start-session', '--json']
 
-    if (inputs.token === undefined && process.env['EW_API_TOKEN'] === undefined) {
+    if (inputs.token === undefined && process.env.EW_API_TOKEN === undefined) {
       throw new Error('api-token or EW_API_TOKEN env var must be specified')
     }
 
@@ -55,8 +55,8 @@ export async function invokeSession(inputs: InvokeSessionInputs) {
 
     const ewCli = spawn('ew-cli', args)
 
-    const stdout = ewCli.stdout
-    const stderr = ewCli.stderr
+    const {stdout} = ewCli
+    const {stderr} = ewCli
 
     stdout.on('data', (data) => {
       info(`${data}`)
@@ -89,23 +89,23 @@ export async function cleanupInvokeSession() {
   info(`Killing ${pids.length} processes`)
   // reverse pids so that child processes get the signal first
   pids.reverse().forEach((p, index) => {
-    const killProcess = spawnSync("kill", ["-2", `${p}`], {encoding: "ascii"})
+    const killProcess = spawnSync("kill", ["-2", p], {encoding: "ascii"})
     info(`kill ${p} returned ${killProcess.status}`)
   })
   let counter = 0;
-  while (spawnSync("ps", ["-p", `${pid}`]).status !== 1 && counter < 20) {
+  while (spawnSync("ps", ["-p", pid]).status !== 1 && counter < 20) {
     counter += 1
-    await new Promise((resolve, _) => { setTimeout(() => resolve(null), 100) })
+    await new Promise((resolve, _) => { setTimeout(() => { resolve(null); }, 100) })
   }
   info(`ew-cli cleanup done`)
 }
 
 function getProcessTree(pid: string, currentDepth: number): string[] {
-  let pids = [pid]
+  const pids = [pid]
   if (currentDepth > 10) {
     return pids
   }
-  const child = spawnSync("pgrep", ["-P", `${pid}`], {encoding: "ascii"})
+  const child = spawnSync("pgrep", ["-P", pid], {encoding: "ascii"})
   if (child.status === 0) {
     child.stdout.split("\n").forEach((p, index) => {
       if (p.trim().length > 0) {
@@ -126,13 +126,13 @@ function setOutputs (adbPorts: AdbPortOutputs) {
   setOutput('adb_port_forwarded_json', JSON.stringify(adbPorts.forwardedEvents))
 }
 
-function waitForJson (stdout: Readable, adbEnabled: boolean, numberOfDevices: number): Promise<AdbPortOutputs> {
-  return new Promise((resolve, _) => {
-    let attachedEvents: EwCliOutput[] = []
-    let forwardedEvents: EwCliOutput[] = []
+async function waitForJson (stdout: Readable, adbEnabled: boolean, numberOfDevices: number): Promise<AdbPortOutputs> {
+  return await new Promise((resolve, _) => {
+    const attachedEvents: EwCliOutput[] = []
+    const forwardedEvents: EwCliOutput[] = []
     stdout.on('data', (data) => {
       try {
-        let ewCliEvent: EwCliOutput = JSON.parse(data)
+        const ewCliEvent: EwCliOutput = JSON.parse(data)
         switch (ewCliEvent.type) {
           case 'adb_attached':
             attachedEvents.push(ewCliEvent)
@@ -149,7 +149,7 @@ function waitForJson (stdout: Readable, adbEnabled: boolean, numberOfDevices: nu
         warning(e)
       }
     })
-    setTimeout(() => resolve(null), WAIT_TIMEOUT)
+    setTimeout(() => { resolve(null); }, WAIT_TIMEOUT)
   })
 }
 

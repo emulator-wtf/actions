@@ -1,12 +1,12 @@
 import { exec } from '@actions/exec';
-import { InvokeInputs } from './inputs.js';
+import type { InvokeInputs } from './inputs.js';
 import { appendCliNetworkInputsToArgs, appendEmulatorConfigInputsToArgs } from '../lib/shared-inputs.js';
 import { INTEGRATION_VERSION } from '../version.js';
 
 export default async function invoke(inputs: InvokeInputs) {
   const args: string[] = [];
 
-  if (inputs.token === undefined && process.env['EW_API_TOKEN'] === undefined) {
+  if (inputs.token === undefined && process.env.EW_API_TOKEN === undefined) {
     throw new Error('api-token or EW_API_TOKEN env var must be specified');
   }
 

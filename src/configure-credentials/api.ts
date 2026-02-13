@@ -1,5 +1,5 @@
 import { HttpClient } from '@actions/http-client'
-import { ErrorResponse, OidcAuthenticateRequest, OidcAuthenticateResponse } from './types.js'
+import type { ErrorResponse, OidcAuthenticateRequest, OidcAuthenticateResponse } from './types.js'
 
 export async function authenticateOidc(request: OidcAuthenticateRequest): Promise<OidcAuthenticateResponse> {
   const client = new HttpClient()

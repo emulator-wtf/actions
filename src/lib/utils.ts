@@ -35,5 +35,5 @@ export function extractErrorMessage(error: unknown): string {
   if (typeof error === 'string') {
     return error
   }
-  return 'An unknown error occurred: ' + JSON.stringify(error)
+  return `An unknown error occurred: ${  JSON.stringify(error)}`
 }
