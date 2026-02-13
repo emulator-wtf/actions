@@ -1,4 +1,4 @@
-import { getBooleanInput, getInput, getMultilineInput, setFailed, warning } from '@actions/core';
+import { setFailed, warning } from '@actions/core';
 import { exec } from '@actions/exec';
 import { InvokeInputs, getInvokeInputs } from './inputs.js';
 import { appendCliNetworkInputsToArgs, appendEmulatorConfigInputsToArgs } from '../lib/shared-inputs.js';
@@ -7,7 +7,7 @@ import { INTEGRATION_VERSION } from '../version.js';
 
 async function invoke(inputs: InvokeInputs) {
   try {
-    const args = [];
+    const args: string[] = [];
 
     if (inputs.token === undefined && process.env['EW_API_TOKEN'] === undefined) {
       warning('api-token or EW_API_TOKEN env var must be specified');
