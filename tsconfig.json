@@ -2,10 +2,11 @@
   "compilerOptions": {
     "module": "nodenext",
     "target": "es2024",
+    "strict": true,
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "outDir": "dist",
   },
   "include": ["src/**/*.ts"]

@@ -4,7 +4,8 @@
   "description": "emulator.wtf GitHub actions",
   "type": "module",
   "scripts": {
-    "build": "rimraf dist && tsc"
+    "build": "rimraf dist && tsc",
+    "lint": "eslint 'src/**/*.ts'"
   },
   "homepage": "https://github.com/emulator-wtf/actions",
   "license": "MIT",
@@ -15,8 +16,13 @@
     "@actions/tool-cache": "^4.0.0"
   },
   "devDependencies": {
-    "@types/node": "^20.19.33",
+    "@types/node": "^24.1.0",
     "typescript": "^5.9.3",
-    "rimraf": "^6.1.3"
+    "rimraf": "^6.1.3",
+    "eslint": "^9.39.2",
+    "eslint-config-love": "^149.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.23.2",
+    "eslint-plugin-promise": "^7.2.1"
   }
 }
