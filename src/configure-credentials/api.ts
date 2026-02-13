@@ -11,7 +11,7 @@ export async function authenticateOidc(request: OidcAuthenticateRequest): Promis
       throw new Error('Unexpected response: null result')
     }
     if (isErrorResponse(response.result)) {
-      throw new Error(`SHOULD NOT HAPPEN! API Error for a 2xx response: ${response.result.message}`)
+      throw new Error(`Unexpected API response shape: received error body for successful (2xx) status: ${response.result.message}`)
     }
     return response.result
   }
