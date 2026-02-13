@@ -3,7 +3,7 @@ import type { InvokeInputs } from './inputs.js';
 import { appendCliNetworkInputsToArgs, appendEmulatorConfigInputsToArgs } from '../lib/shared-inputs.js';
 import { INTEGRATION_VERSION } from '../version.js';
 
-export default async function invoke(inputs: InvokeInputs) {
+export default async function invoke(inputs: InvokeInputs): Promise<void> {
   const args: string[] = [];
 
   if (inputs.token === undefined && process.env.EW_API_TOKEN === undefined) {
@@ -14,58 +14,58 @@ export default async function invoke(inputs: InvokeInputs) {
     args.push('--token', inputs.token);
   }
 
-  if (inputs.libraryTestApk) {
-    if (inputs.appApk || inputs.testApk) {
+  if (inputs.libraryTestApk !== undefined) {
+    if (inputs.appApk !== undefined || inputs.testApk !== undefined) {
       throw new Error('library-test should be used without app and test');
     }
     args.push('--library-test', inputs.libraryTestApk);
-  } else if (!inputs.appApk) {
+  } else if (inputs.appApk === undefined) {
     throw new Error('app must be specified');
-  } else if (!inputs.testApk) {
+  } else if (inputs.testApk === undefined) {
     throw new Error('test must be specified');
   } else {
     args.push('--app', inputs.appApk, '--test', inputs.testApk);
   }
 
-  if (inputs.outputsDir) {
+  if (inputs.outputsDir !== undefined) {
     args.push('--outputs-dir', inputs.outputsDir);
   }
 
-  if (inputs.outputs) {
+  if (inputs.outputs !== undefined) {
     args.push('--outputs', inputs.outputs);
   }
 
-  if (inputs.recordVideo !== false) {
-    args.push('--no-record-video');
-  } else {
+  if (inputs.recordVideo === undefined || inputs.recordVideo) {
     args.push('--record-video');
+  } else {
+    args.push('--no-record-video');
   }
 
-  if (inputs.timeout) {
+  if (inputs.timeout !== undefined) {
     args.push('--timeout', inputs.timeout);
   }
 
-  if (inputs.testTargets) {
+  if (inputs.testTargets !== undefined) {
     args.push('--test-targets', inputs.testTargets.join(';'));
   }
 
-  if (inputs.displayName) {
+  if (inputs.displayName !== undefined) {
     args.push('--display-name', inputs.displayName);
   }
 
-  if (inputs.useOrchestrator) {
+  if (inputs.useOrchestrator === true) {
     args.push('--use-orchestrator');
   }
 
-  if (inputs.testRunnerClass) {
+  if (inputs.testRunnerClass !== undefined) {
     args.push('--test-runner-class', inputs.testRunnerClass);
   }
 
-  if (inputs.clearPackageData) {
+  if (inputs.clearPackageData === true) {
     args.push('--clear-package-data');
   }
 
-  if (inputs.withCoverage) {
+  if (inputs.withCoverage === true) {
     args.push('--with-coverage');
   }
 
@@ -81,17 +81,17 @@ export default async function invoke(inputs: InvokeInputs) {
     args.push('--secret-environment-variables', inputs.secretEnvironmentVariables.join(','));
   }
 
-  if (inputs.shardTargetRuntime) {
+  if (inputs.shardTargetRuntime !== undefined) {
     args.push('--shard-target-runtime', inputs.shardTargetRuntime);
-  } else if (inputs.numBalancedShards) {
+  } else if (inputs.numBalancedShards !== undefined) {
     args.push('--num-balanced-shards', inputs.numBalancedShards);
-  } else if (inputs.numShards) {
+  } else if (inputs.numShards !== undefined) {
     args.push('--num-shards', inputs.numShards);
-  } else if (inputs.numUniformShards) {
+  } else if (inputs.numUniformShards !== undefined) {
     args.push('--num-uniform-shards', inputs.numUniformShards);
   }
 
-  if (inputs.testcaseDurationHint) {
+  if (inputs.testcaseDurationHint !== undefined) {
     args.push('--testcase-duration-hint', inputs.testcaseDurationHint);
   }
 
@@ -99,15 +99,15 @@ export default async function invoke(inputs: InvokeInputs) {
     args.push('--directories-to-pull', inputs.dirsToPull.join(','));
   }
 
-  if (inputs.sideEffects) {
+  if (inputs.sideEffects === true) {
     args.push('--side-effects');
   }
 
-  if (inputs.numFlakyTestAttempts) {
+  if (inputs.numFlakyTestAttempts !== undefined) {
     args.push('--num-flaky-test-attempts', inputs.numFlakyTestAttempts);
   }
 
-  if (inputs.flakyTestRepeatMode) {
+  if (inputs.flakyTestRepeatMode !== undefined) {
     args.push('--flaky-test-repeat-mode', inputs.flakyTestRepeatMode);
   }
 
@@ -115,7 +115,7 @@ export default async function invoke(inputs: InvokeInputs) {
     args.push('--no-file-cache');
   }
 
-  if (inputs.fileCacheTtl) {
+  if (inputs.fileCacheTtl !== undefined) {
     args.push('--file-cache-ttl', inputs.fileCacheTtl);
   }
 
@@ -123,7 +123,7 @@ export default async function invoke(inputs: InvokeInputs) {
     args.push('--no-test-cache');
   }
 
-  if (inputs.async) {
+  if (inputs.async === true) {
     args.push('--async');
   }
 
