@@ -5,7 +5,6 @@ import { extractErrorMessage } from '../lib/utils.js'
 import { getInvokeInputs } from '../invoke/inputs.js'
 import invoke from '../invoke/index.js'
 
-
 try {
   const version = getInput('version')
   await setupEwCli(version)
