@@ -18,7 +18,7 @@ on: push
 jobs:
   run-tests:
     runs-on: ubuntu-20.04
-  steps:
+    steps:
     - uses: actions/checkout@v2
     - name: Build app
       run: ./gradlew assembleDebug assembleAndroidTest
