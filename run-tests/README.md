@@ -17,9 +17,13 @@ name: Run tests
 on: push
 jobs:
   run-tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
+    - uses: actions/setup-java@v5
+      with:
+        distribution: 'zulu'
+        java-version: '24'
     - name: Build app
       run: ./gradlew assembleDebug assembleAndroidTest
     - name: Run tests
