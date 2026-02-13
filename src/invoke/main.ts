@@ -3,6 +3,7 @@ import { exec } from '@actions/exec';
 import { InvokeInputs, getInvokeInputs } from './inputs.js';
 import { appendCliNetworkInputsToArgs, appendEmulatorConfigInputsToArgs } from '../lib/shared-inputs.js';
 import { extractErrorMessage } from '../lib/utils.js';
+import { INTEGRATION_VERSION } from '../version.js';
 
 async function invoke(inputs: InvokeInputs) {
   try {
@@ -79,15 +80,15 @@ async function invoke(inputs: InvokeInputs) {
       args.push('--with-coverage');
     }
 
-    if (inputs.additionalApks.length > 0) {
+    if (inputs.additionalApks !== undefined) {
       args.push('--additional-apks', inputs.additionalApks.join(','));
     }
 
-    if (inputs.environmentVariables.length > 0) {
+    if (inputs.environmentVariables !== undefined) {
       args.push('--environment-variables', inputs.environmentVariables.join(','));
     }
 
-    if (inputs.secretEnvironmentVariables.length > 0) {
+    if (inputs.secretEnvironmentVariables !== undefined) {
       args.push('--secret-environment-variables', inputs.secretEnvironmentVariables.join(','));
     }
 
@@ -105,7 +106,7 @@ async function invoke(inputs: InvokeInputs) {
       args.push('--testcase-duration-hint', inputs.testcaseDurationHint);
     }
 
-    if (inputs.dirsToPull.length > 0) {
+    if (inputs.dirsToPull !== undefined) {
       args.push('--directories-to-pull', inputs.dirsToPull.join(','));
     }
 
@@ -137,10 +138,10 @@ async function invoke(inputs: InvokeInputs) {
       args.push('--async');
     }
 
-    appendCliNetworkInputsToArgs(inputs, args)
-    appendEmulatorConfigInputsToArgs(inputs, args)
+    appendCliNetworkInputsToArgs(inputs, args);
+    appendEmulatorConfigInputsToArgs(inputs, args);
 
-    args.push('--ew-integration', 'github-action 0.9.5');
+    args.push('--ew-integration', `actions ${INTEGRATION_VERSION}`);
 
     await exec('ew-cli', args);
   } catch (e) {
@@ -150,8 +151,9 @@ async function invoke(inputs: InvokeInputs) {
 }
 
 try {
-  invoke(getInvokeInputs());
+  await invoke(getInvokeInputs());
 } catch (e) {
-  warning(`invoke failed: ${e}`)
-  setFailed(extractErrorMessage(e))
+  const msg = extractErrorMessage(e)
+  warning(`invoke failed: ${msg}`)
+  setFailed(msg)
 }
