@@ -141,7 +141,7 @@ async function invoke(inputs: InvokeInputs) {
     appendCliNetworkInputsToArgs(inputs, args);
     appendEmulatorConfigInputsToArgs(inputs, args);
 
-    args.push('--ew-integration', `actions ${INTEGRATION_VERSION}`);
+    args.push('--ew-integration', `github-actions ${INTEGRATION_VERSION}`);
 
     await exec('ew-cli', args);
   } catch (e) {
