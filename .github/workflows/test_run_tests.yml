@@ -1,0 +1,45 @@
+name: Test use-emulator
+permissions:
+  contents: read
+  checks: write
+  id-token: write
+  pull-requests: write
+on:
+  pull_request:
+    paths:
+    # action metadata changes
+    - run-tests/**
+    # sources & direct dependencies
+    - src/run-tests/**
+    - src/setup-ew-cli/**
+    - src/invoke/**
+    - src/lib/**
+    # npm/ts config
+    - '*.json'
+    # workflow file itself
+    - .github/workflows/test_run_tests.yml
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - uses: emulator-wtf/configure-credentials@v1
+      with:
+        oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
+    - name: Setup Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24'
+    - uses: jdx/mise-action@v3
+      with:
+        install: false
+    - run: mise dist
+    - uses: emulator-wtf/configure-credentials@v1
+      with:
+        oidc-configuration-id: ${{ vars.EW_OIDC_ID }}
+    - run: curl -o minimal.apk -sS https://maven.emulator.wtf/releases/wtf/emulator/minimal/0.0.2/minimal-0.0.2.apk
+    - run: curl -o minimal-test.apk -sS https://maven.emulator.wtf/releases/wtf/emulator/minimal/0.0.2/minimal-0.0.2-test.apk
+    - uses: ./run-tests
+      with:
+        app: minimal.apk
+        test: minimal-test.apk
