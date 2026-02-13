@@ -16,7 +16,7 @@ export async function authenticateOidc(request: OidcAuthenticateRequest): Promis
     return response.result
   }
 
-  if (isErrorResponse(response.result)) {
+  if (response.result != null && isErrorResponse(response.result)) {
     throw new Error(`API Error: ${response.result.message}`)
   }
   throw Error(`API call to emulator.wtf failed with status code ${response.statusCode}`)
