@@ -7,11 +7,15 @@ permissions:
 on:
   pull_request:
     paths:
-      - src/**
-      - node_modules/**
-      - '*.json'
-      - invoke-session/**
-      - .github/workflows/test_invoke_session.yml
+    # action metadata changes
+    - invoke-session/**
+    # sources & direct dependencies
+    - src/invoke-session/**
+    - src/lib/**
+    # npm/ts config
+    - '*.json'
+    # workflow file itself
+    - .github/workflows/test_invoke_session.yml
 jobs:
   test:
     runs-on: ubuntu-latest

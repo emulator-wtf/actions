@@ -7,10 +7,16 @@ permissions:
 on:
   pull_request:
     paths:
-    - src/**
-    - node_modules/**
-    - '*.json'
+    # action metadata changes
     - use-emulator/**
+    # sources & direct dependencies
+    - src/use-emulator/**
+    - src/setup-ew-cli/**
+    - src/invoke-session/**
+    - src/lib/**
+    # npm/ts config
+    - '*.json'
+    # workflow file itself
     - .github/workflows/test_use_emulator.yml
 jobs:
   test:
