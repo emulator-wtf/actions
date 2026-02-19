@@ -11,7 +11,7 @@ export function getOptionalBooleanInput(name) {
     return undefined;
 }
 export function getOptionalMultilineInput(name) {
-    const value = getMultilineInput(name).filter(x => x.length > 0);
+    const value = getMultilineInput(name).map(x => x.trim()).filter(x => x.length > 0);
     if (value.length > 0) {
         return value;
     }
