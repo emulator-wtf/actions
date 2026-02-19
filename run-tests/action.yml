@@ -1,10 +1,17 @@
-name: invoke
-description: Invoke the ew-cli command to run Android instrumentation tests
+name: 'Run Android instrumentation tests'
+author: 'emulator.wtf'
+description: 'Run tests with emulator.wtf'
 inputs:
-  # authentication
+  # ew-cli
+  version:
+    description: 'ew-cli version to use'
+    required: true
+    default: '1.1.0'
+  # Authentication
   api-token:
     description: 'Api token for emulator.wtf'
     required: false
+  # File options
   app:
     description: 'Application apk file'
     required: false
@@ -18,7 +25,7 @@ inputs:
     description: 'Additional apks to install, one per line'
     required: false
   file-cache-ttl:
-    description: "Max time to keep cached files in the backend followed by a unit (d,h, m or s), with the maximum value being 90d and minimum value being 5m (default: 1h)"
+    description: "Max time to keep cached files in the backend followed by a unit (d, h, m or s), with the maximum value being 90d and minimum value being 5m (default: 1h)"
     required: false
   file-cache:
     description: "Set to false to disable remote file cache - APK and test-data will always be uploaded, even if they were uploaded before"
@@ -129,5 +136,59 @@ branding:
   color: orange
   icon: smartphone
 runs:
-  using: node24
-  main: ../dist/invoke/main.js
+  using: composite
+  steps:
+    - name: Setup ew-cli
+      uses: emulator-wtf/setup-ew-cli@v1.0.0-rc02
+      with:
+        version: ${{ inputs.version }}
+    - name: Run instrumented tests
+      uses: emulator-wtf/invoke@v1.0.0-rc02
+      with:
+        # Authentication
+        api-token: ${{ inputs.api-token }}
+        # File options
+        app: ${{ inputs.app }}
+        test: ${{ inputs.test }}
+        library-test: ${{ inputs.library-test }}
+        additional-apks: ${{ inputs.additional-apks }}
+        file-cache-ttl: ${{ inputs.file-cache-ttl }}
+        file-cache: ${{ inputs.file-cache }}
+        # Test configuration
+        display-name: ${{ inputs.display-name }}
+        devices: ${{ inputs.devices }}
+        test-runner-class: ${{ inputs.test-runner-class }}
+        use-orchestrator: ${{ inputs.use-orchestrator }}
+        clear-package-data: ${{ inputs.clear-package-data }}
+        num-flaky-test-attempts: ${{ inputs.num-flaky-test-attempts }}
+        flaky-test-repeat-mode: ${{ inputs.flaky-test-repeat-mode }}
+        timeout: ${{ inputs.timeout }}
+        test-targets: ${{ inputs.test-targets }}
+        environment-variables: ${{ inputs.environment-variables }}
+        secret-environment-variables: ${{ inputs.secret-environment-variables }}
+        test-cache: ${{ inputs.test-cache }}
+        side-effects: ${{ inputs.side-effects }}
+        # Test Sharding
+        shard-target-runtime: ${{ inputs.shard-target-runtime }}
+        num-balanced-shards: ${{ inputs.num-balanced-shards }}
+        testcase-duration-hint: ${{ inputs.testcase-duration-hint }}
+        num-uniform-shards: ${{ inputs.num-uniform-shards }}
+        num-shards: ${{ inputs.num-shards }}
+        # Test outputs
+        record-video: ${{ inputs.record-video }}
+        with-coverage: ${{ inputs.with-coverage }}
+        directories-to-pull: ${{ inputs.directories-to-pull }}
+        outputs: ${{ inputs.outputs }}
+        outputs-dir: ${{ inputs.outputs-dir }}
+        # Network options (emulator)
+        dns-server: ${{ inputs.dns-server }}
+        dns-override: ${{ inputs.dns-override }}
+        egress-tunnel: ${{ inputs.egress-tunnel }}
+        egress-localhost-fwd-ip: ${{ inputs.egress-localhost-fwd-ip }}
+        # Network options (action)
+        proxy-host: ${{ inputs.proxy-host }}
+        proxy-port: ${{ inputs.proxy-port }}
+        proxy-user: ${{ inputs.proxy-user }}
+        proxy-password: ${{ inputs.proxy-password }}
+        # Operation
+        async: ${{ inputs.async }}
