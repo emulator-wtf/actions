@@ -1,13 +1,13 @@
-import { setFailed, warning } from '@actions/core';
-import { getInvokeInputs } from './inputs.js';
-import { extractErrorMessage } from '../lib/utils.js';
+import { setFailed, warning } from "@actions/core";
+import { getInvokeInputs } from "./inputs.js";
+import { extractErrorMessage } from "../lib/utils.js";
 
-import invoke from './index.js';
+import invoke from "./index.js";
 
 try {
   await invoke(getInvokeInputs());
 } catch (e) {
-  const msg = extractErrorMessage(e)
-  warning(`invoke failed: ${msg}`)
-  setFailed(msg)
+  const msg = extractErrorMessage(e);
+  warning(`invoke failed: ${msg}`);
+  setFailed(msg);
 }
