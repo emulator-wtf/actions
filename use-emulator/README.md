@@ -9,8 +9,8 @@ your workflow can run custom logic or tests with the emulator.
 
 ## Quick usage
 
-Make sure you have Android SKD installed on your runner.
-Add use-emulator action to you workflow and use adb port from the action outputs
+Make sure you have Android SDK installed on your runner.
+Add the use-emulator action to you workflow and use adb port from the action outputs
 to execute custom logic on the emulator(s)
 
 Basic example:
@@ -20,10 +20,10 @@ on:
   workflow_dispatch:
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
-    - uses: emulator-wtf/use-emulator@v0
+    - uses: actions/checkout@v6
+    - uses: emulator-wtf/actions/use-emulator@v1
       id: ew-cli
       with:
         devices: |
@@ -72,9 +72,9 @@ Outputs are either in comma-separated lists or in JSON format:
 [{"type":"adb_attached","model":"Pixel2","version":33,"ip":"127.0.0.1","port":41137},{"type":"adb_attached","model":"Pixel7","version":34,"ip":"127.0.0.1","port":51137}]
 ```
 
-| Variable                  | Description                                                                                                 |
-|---------------------------|-------------------------------------------------------------------------------------------------------------|
+| Variable                  | Description                                                                                                  |
+|---------------------------|--------------------------------------------------------------------------------------------------------------|
 | `adb_attached`            | Comma-separated list of adb attached ports, e.g. `23433,61323`. Not filled when 'adb: false' option is used. |
-| `adb_attached_json`       | List of adb attached ports in JSON format. Not filled when 'adb: false' option is used.                     |
+| `adb_attached_json`       | List of adb attached ports in JSON format. Not filled when 'adb: false' option is used.                      |
 | `adb_port_forwarded`      | Comma-separated list of forwarded adb ports, e.g. `23433,61323`. Useful when 'adb: false' option is used.    |
-| `adb_port_forwarded_json` | List of forwarded adb ports in JSON format. Useful when 'adb: false' option is used.                        |
+| `adb_port_forwarded_json` | List of forwarded adb ports in JSON format. Useful when 'adb: false' option is used.                         |

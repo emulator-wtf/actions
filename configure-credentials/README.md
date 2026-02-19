@@ -21,11 +21,11 @@ to authenticate with emulator.wtf and obtain temporary credentials.
      id-token: write
    ```
 
-3. Invoke the `emulator-wtf/configure-credentials` action with the OIDC
+3. Invoke the `emulator-wtf/actions/configure-credentials` action with the OIDC
    configuration ID added in step 1.
 
    ```yaml
-   - uses: emulator-wtf/configure-credentials@v1
+   - uses: emulator-wtf/actions/configure-credentials@v1
      with:
        oidc-configuration-id: **OIDC-CONFIGURATION-ID-GOES-HERE**
    ```
@@ -60,7 +60,7 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: '24'
-    - uses: emulator-wtf/configure-credentials@v1
+    - uses: emulator-wtf/actions/configure-credentials@v1
       with:
         oidc-configuration-id: **OIDC-CONFIGURATION-ID-GOES-HERE**
     - run: ./gradlew testWithEmulatorWtf
