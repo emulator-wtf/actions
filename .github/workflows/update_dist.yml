@@ -50,8 +50,11 @@ jobs:
 
         # Copy specified directories
         cp -a ../source/dist .
+        cp -a ../source/configure-credentials .
+        cp -a ../source/invoke .
         cp -a ../source/invoke-session .
         cp -a ../source/node_modules .
+        cp -a ../source/run-tests .
         cp -a ../source/setup-ew-cli .
         cp -a ../source/use-emulator .
 
