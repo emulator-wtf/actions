@@ -45,7 +45,7 @@ export default async function setupEwCli(version: string): Promise<void> {
 
     await exec("ew-cli --version");
 
-    if (cachedJar === "") {
+    if (cachedJar.length === 0) {
       debug(`Caching jar...`);
       await cacheFile(
         `${env.HOME}/.cache/emulator-wtf/ew-cli-${version}.jar`,
