@@ -17,6 +17,6 @@
   "devDependencies": {
     "@types/node": "^20.19.33",
     "typescript": "^5.9.3",
-    "rimraf": "^6.1.2"
+    "rimraf": "^6.1.3"
   }
 }
