@@ -1,0 +1,38 @@
+name: Check
+on:
+  pull_request:
+    paths:
+    # sources & direct dependencies
+    - src/**
+    # npm/ts config
+    - 'eslint.config.js'
+    - '*.json'
+    # workflow file itself
+    - .github/workflows/lint.yml
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - name: Setup Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24'
+    - uses: jdx/mise-action@v3
+      with:
+        install: false
+    - run: mise lint
+  build:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+    - uses: actions/checkout@v6
+    - name: Setup Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24'
+    - uses: jdx/mise-action@v3
+      with:
+        install: false
+    - run: mise build

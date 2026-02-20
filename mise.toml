@@ -8,6 +8,13 @@ deps = 'npm ci'
 run = 'npm run build'
 depends = ['deps']
 
+[tasks.lint]
+run = [
+  'npm run lint',
+  'npm run prettier'
+]
+depends = ['deps']
+
 [tasks.dist]
 depends = ['build']
 run = [

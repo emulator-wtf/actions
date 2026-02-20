@@ -1,12 +1,12 @@
 export interface OidcAuthenticateRequest {
-  oidcConfigurationUuid: string
-  oidcToken: string
+  oidcConfigurationUuid: string;
+  oidcToken: string;
 }
 
 export interface OidcAuthenticateResponse {
-  apiToken: string
+  apiToken: string;
 }
 
 export interface ErrorResponse {
-  message: string
+  message: string;
 }
