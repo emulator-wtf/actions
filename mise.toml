@@ -17,7 +17,3 @@ depends = ['deps']
 
 [tasks.dist]
 depends = ['build']
-run = [
-  'rm -rf node_modules',
-  'npm ci --omit=dev --omit=optional'
-]
