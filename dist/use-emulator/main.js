@@ -1,16 +1,1 @@
-import { getInput, setFailed, warning } from "@actions/core";
-import setupEwCli from "../setup-ew-cli/index.js";
-import { invokeSession } from "../invoke-session/index.js";
-import { getInvokeSessionInputs } from "../invoke-session/inputs.js";
-import { extractErrorMessage } from "../lib/utils.js";
-try {
-    const version = getInput("version");
-    await setupEwCli(version);
-    await invokeSession(getInvokeSessionInputs());
-    process.exit(0);
-}
-catch (error) {
-    const msg = extractErrorMessage(error);
-    warning(`use-emulator failed: ${msg}`);
-    setFailed(msg);
-}
+import{g as o,e as t,w as r,s as i}from"../utils-D0EoKxW6.js";import{s}from"../index-EKYsaZK1.js";import{i as e}from"../index-CQjdnX_q.js";import{g as p}from"../inputs-B-qTK7TJ.js";import"os";import"crypto";import"fs";import"path";import"http";import"https";import"net";import"tls";import"events";import"assert";import"util";import"node:assert";import"node:net";import"node:http";import"node:stream";import"node:buffer";import"node:util";import"node:querystring";import"node:events";import"node:diagnostics_channel";import"node:tls";import"node:zlib";import"node:perf_hooks";import"node:util/types";import"node:worker_threads";import"node:url";import"node:async_hooks";import"node:console";import"node:dns";import"string_decoder";import"child_process";import"timers";import"node:fs";import"node:process";import"stream";import"node:child_process";import"../shared-inputs-yfzFkslS.js";try{const t=o("version");await s(t),await e(p()),process.exit(0)}catch(o){const s=t(o);r(`use-emulator failed: ${s}`),i(s)}

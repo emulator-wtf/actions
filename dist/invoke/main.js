@@ -1,12 +1,1 @@
-import { setFailed, warning } from "@actions/core";
-import { getInvokeInputs } from "./inputs.js";
-import { extractErrorMessage } from "../lib/utils.js";
-import invoke from "./index.js";
-try {
-    await invoke(getInvokeInputs());
-}
-catch (e) {
-    const msg = extractErrorMessage(e);
-    warning(`invoke failed: ${msg}`);
-    setFailed(msg);
-}
+import{e as o,w as t,s as r}from"../utils-D0EoKxW6.js";import{i,g as e}from"../index-rwzpVtOE.js";import"os";import"crypto";import"fs";import"path";import"http";import"https";import"net";import"tls";import"events";import"assert";import"util";import"node:assert";import"node:net";import"node:http";import"node:stream";import"node:buffer";import"node:util";import"node:querystring";import"node:events";import"node:diagnostics_channel";import"node:tls";import"node:zlib";import"node:perf_hooks";import"node:util/types";import"node:worker_threads";import"node:url";import"node:async_hooks";import"node:console";import"node:dns";import"string_decoder";import"child_process";import"timers";import"../shared-inputs-yfzFkslS.js";try{await i(e())}catch(i){const e=o(i);t(`invoke failed: ${e}`),r(e)}

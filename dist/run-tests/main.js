@@ -1,15 +1,1 @@
-import { getInput, setFailed, warning } from "@actions/core";
-import setupEwCli from "../setup-ew-cli/index.js";
-import { extractErrorMessage } from "../lib/utils.js";
-import { getInvokeInputs } from "../invoke/inputs.js";
-import invoke from "../invoke/index.js";
-try {
-    const version = getInput("version");
-    await setupEwCli(version);
-    await invoke(getInvokeInputs());
-}
-catch (error) {
-    const msg = extractErrorMessage(error);
-    warning(`run-tests failed: ${msg}`);
-    setFailed(msg);
-}
+import{g as o,e as t,w as r,s as i}from"../utils-D0EoKxW6.js";import{s}from"../index-EKYsaZK1.js";import{i as e,g as p}from"../index-rwzpVtOE.js";import"os";import"crypto";import"fs";import"path";import"http";import"https";import"net";import"tls";import"events";import"assert";import"util";import"node:assert";import"node:net";import"node:http";import"node:stream";import"node:buffer";import"node:util";import"node:querystring";import"node:events";import"node:diagnostics_channel";import"node:tls";import"node:zlib";import"node:perf_hooks";import"node:util/types";import"node:worker_threads";import"node:url";import"node:async_hooks";import"node:console";import"node:dns";import"string_decoder";import"child_process";import"timers";import"node:fs";import"node:process";import"stream";import"../shared-inputs-yfzFkslS.js";try{const t=o("version");await s(t),await e(p())}catch(o){const s=t(o);r(`run-tests failed: ${s}`),i(s)}
