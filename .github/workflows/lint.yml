@@ -19,7 +19,7 @@ jobs:
       uses: actions/setup-node@v6
       with:
         node-version: '24'
-    - uses: jdx/mise-action@v3
+    - uses: jdx/mise-action@v4
       with:
         install: false
     - run: mise lint
@@ -32,7 +32,7 @@ jobs:
       uses: actions/setup-node@v6
       with:
         node-version: '24'
-    - uses: jdx/mise-action@v3
+    - uses: jdx/mise-action@v4
       with:
         install: false
     - run: mise build
