@@ -1,0 +1,1 @@
+import{d as t,f as i}from"./utils-DayKEhJ9.js";import{g as a,a as o}from"./shared-inputs-D6NUZZb7.js";function r(){const r=a(),s=o();return{token:t("api-token"),outputsDir:t("outputs-dir"),outputs:t("outputs"),recordVideo:i("record-video"),maxTimeLimit:t("max-time-limit"),adbEnabled:i("adb"),adbBinary:t("adb-binary"),...r,...s}}export{r as g};
