@@ -25,7 +25,7 @@
     "@rollup/plugin-typescript": "^12.3.0",
     "@types/node": "^24.12.0",
     "eslint": "^9.39.2",
-    "eslint-config-love": "^151.0.0",
+    "eslint-config-love": "^152.0.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-n": "^17.24.0",
     "eslint-plugin-promise": "^7.2.1",
