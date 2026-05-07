@@ -23,26 +23,26 @@ on: push
 jobs:
   run-tests:
     runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v6
-    - uses: actions/setup-java@v5
-      with:
-        distribution: 'zulu'
-        java-version: '25'
-    - name: Build app
-      run: ./gradlew assembleDebug assembleAndroidTest
-    - name: Run tests
-      uses: emulator-wtf/actions/run-tests@v1.0.0
-      with:
-        api-token: ${{ secrets.EW_API_TOKEN }}
-        app: app/build/outputs/apk/debug/app-debug.apk
-        test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
-        outputs-dir: build/test-results
-    - name: Publish test report
-      uses: mikepenz/action-junit-report@v6
-      if: always() # always run even if the tests fail
-      with:
-        report_paths: 'build/test-results/**/*.xml'
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '25'
+      - name: Build app
+        run: ./gradlew assembleDebug assembleAndroidTest
+      - name: Run tests
+        uses: emulator-wtf/actions/run-tests@v1.0.0
+        with:
+          api-token: ${{ secrets.EW_API_TOKEN }}
+          app: app/build/outputs/apk/debug/app-debug.apk
+          test: app/build/outputs/apk/androidTest/app-debug-androidTest.apk
+          outputs-dir: build/test-results
+      - name: Publish test report
+        uses: mikepenz/action-junit-report@v6
+        if: always() # always run even if the tests fail
+        with:
+          report_paths: 'build/test-results/**/*.xml'
 ```
 
 See the full list of inputs and additional examples in
@@ -62,23 +62,23 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
-    - uses: emulator-wtf/actions/use-emulator@v1.0.0
-      id: ew-cli
-      with:
-        devices: |
-          model=Pixel2,version=33,gpu=auto
-          model=Pixel2,version=33,gpu=auto
-          model=Pixel2,version=33,gpu=auto
-    - name: Make use of emulators
-      env:
-        ADB: ${{ steps.ew-cli.outputs.adb_attached }}
-      run: |
-        echo "Attached ${{ steps.ew-cli.outputs.adb_attached }}"
-        echo "Attached json ${{ steps.ew-cli.outputs.adb_attached_json }}"
-        echo "Forwarded ${{ steps.ew-cli.outputs.adb_port_forwarded }}"
-        echo "Forwarded json ${{ steps.ew-cli.outputs.adb_port_forwarded_json }}"
-        echo "From env: $ADB"
+      - uses: actions/checkout@v6
+      - uses: emulator-wtf/actions/use-emulator@v1.0.0
+        id: ew-cli
+        with:
+          devices: |
+            model=Pixel2,version=33,gpu=auto
+            model=Pixel2,version=33,gpu=auto
+            model=Pixel2,version=33,gpu=auto
+      - name: Make use of emulators
+        env:
+          ADB: ${{ steps.ew-cli.outputs.adb_attached }}
+        run: |
+          echo "Attached ${{ steps.ew-cli.outputs.adb_attached }}"
+          echo "Attached json ${{ steps.ew-cli.outputs.adb_attached_json }}"
+          echo "Forwarded ${{ steps.ew-cli.outputs.adb_port_forwarded }}"
+          echo "Forwarded json ${{ steps.ew-cli.outputs.adb_port_forwarded_json }}"
+          echo "From env: $ADB"
 ```
 
 See the full list of inputs and additional examples in

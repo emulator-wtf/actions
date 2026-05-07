@@ -55,13 +55,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
-    - uses: actions/setup-java@v5
-      with:
-        distribution: 'zulu'
-        java-version: '25'
-    - uses: emulator-wtf/actions/configure-credentials@v1.0.0
-      with:
-        oidc-configuration-id: **OIDC-CONFIGURATION-ID-GOES-HERE**
-    - run: ./gradlew testWithEmulatorWtf
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '25'
+      - uses: emulator-wtf/actions/configure-credentials@v1.0.0
+        with:
+          oidc-configuration-id: **OIDC-CONFIGURATION-ID-GOES-HERE**
+      - run: ./gradlew testWithEmulatorWtf
 ```
