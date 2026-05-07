@@ -9,7 +9,7 @@ With this action you can easily run your Android instrumentation tests with
 ## Quick example
 
 A really basic example building an app apk, test apk, running tests and then
-finally collecting the results with the `mikepenz/action-junit-report@v2`
+finally collecting the results with the `mikepenz/action-junit-report@v6`
 action:
 
 ```yaml
