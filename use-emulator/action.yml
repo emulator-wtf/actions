@@ -83,10 +83,10 @@ runs:
   post-if: always()
 outputs:
   adb_attached:
-    description: 'Comma separated list of adb attached ports. Not filled when `adb: false` option is used.'
+    description: 'Comma-separated list of adb attached ports. Not filled when `adb: false` option is used.'
   adb_attached_json:
     description: 'List of adb attached ports in JSON format. Not filled when `adb: false` option is used.'
   adb_port_forwarded:
-    description: 'Comma separated list of forwarded adb ports. Useful when `adb: false` option is used.'
+    description: 'Comma-separated list of forwarded adb ports. Useful when `adb: false` option is used.'
   adb_port_forwarded_json:
     description: 'List of forwarded adb ports in JSON format. Useful when `adb: false` option is used.'
