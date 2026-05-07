@@ -1,4 +1,4 @@
-# Use emulator session with emulator.wtf
+# `emulator-wtf/actions/use-emulator`
 
 Emulator.wtf is an Android cloud emulator laser-focused on performance to
 deliver quick feedback to your PRs.
@@ -22,23 +22,23 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
-    - uses: emulator-wtf/actions/use-emulator@v1
-      id: ew-cli
-      with:
-        devices: |
-          model=Pixel2,version=33,gpu=auto
-          model=Pixel2,version=33,gpu=auto
-          model=Pixel2,version=33,gpu=auto
-    - name: Make use of emulators
-      env:
-        ADB: ${{ steps.ew-cli.outputs.adb_attached }}
-      run: |
-        echo "Attached ${{ steps.ew-cli.outputs.adb_attached }}"
-        echo "Attached json ${{ steps.ew-cli.outputs.adb_attached_json }}"
-        echo "Forwarded ${{ steps.ew-cli.outputs.adb_port_forwarded }}"
-        echo "Forwarded json ${{ steps.ew-cli.outputs.adb_port_forwarded_json }}"
-        echo "From env: $ADB"
+      - uses: actions/checkout@v6
+      - uses: emulator-wtf/actions/use-emulator@v1.0.0
+        id: ew-cli
+        with:
+          devices: |
+            model=Pixel2,version=33,gpu=auto
+            model=Pixel2,version=33,gpu=auto
+            model=Pixel2,version=33,gpu=auto
+      - name: Make use of emulators
+        env:
+          ADB: ${{ steps.ew-cli.outputs.adb_attached }}
+        run: |
+          echo "Attached ${{ steps.ew-cli.outputs.adb_attached }}"
+          echo "Attached json ${{ steps.ew-cli.outputs.adb_attached_json }}"
+          echo "Forwarded ${{ steps.ew-cli.outputs.adb_port_forwarded }}"
+          echo "Forwarded json ${{ steps.ew-cli.outputs.adb_port_forwarded_json }}"
+          echo "From env: $ADB"
 ```
 
 ## Inputs
