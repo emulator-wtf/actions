@@ -28,7 +28,7 @@ inputs:
     description: >-
       Path to the adb binary to use.
       If not specified, ew-cli will try to discover it in the `ANDROID_HOME` or `ANDROID_SDK_ROOT` environment
-      variables, or on the `PATH`.'
+      variables, or on the `PATH`.
     required: false
   # Session outputs
   record-video:

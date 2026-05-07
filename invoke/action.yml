@@ -19,7 +19,7 @@ inputs:
     required: false
   file-cache-ttl:
     description: >-
-      Max time to keep cached files in the backend followed by a unit (d,h, m or s), with the maximum value being 90d
+      Max time to keep cached files in the backend followed by a unit (d, h, m or s), with the maximum value being 90d
       and minimum value being 5m (default: 1h)
     required: false
   file-cache:

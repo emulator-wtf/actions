@@ -26,7 +26,7 @@ inputs:
     required: false
   file-cache-ttl:
     description: >-
-      Max time to keep cached files in the backend followed by a unit (d,h, m or s), with the maximum value being 90d
+      Max time to keep cached files in the backend followed by a unit (d, h, m or s), with the maximum value being 90d
       and minimum value being 5m (default: 1h)
     required: false
   file-cache:
@@ -85,6 +85,7 @@ inputs:
       Indicates that the test run has side effects, i.e. it hits external resources and might be a part of a bigger test
       suite. Adding this flag means that the test will not be automatically retried in case of errors.
       Default: false.
+    required: false
   # Test sharding
   num-balanced-shards:
     description: 'Set to a number larger than 1 to split your tests into even shards based on historical runtime.'
