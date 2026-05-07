@@ -9,4 +9,5 @@ runs:
   steps:
     - shell: bash
       run: |
-        echo "Use 'emulator-wtf/actions/run-tests' to run your tests, 'emulator-wtf/actions/use-emulator' to obtain an emulator or 'emulator-wtf/actions/configure-credentials' to use an OIDC token" && false
+        echo "::error::Use 'emulator-wtf/actions/run-tests' to run your tests, 'emulator-wtf/actions/use-emulator' to obtain an emulator or 'emulator-wtf/actions/configure-credentials' to use an OIDC token"
+        exit 1
