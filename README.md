@@ -3,7 +3,7 @@
 [Emulator.wtf](https://emulator.wtf) is an Android cloud emulator laser-focused
 on performance to deliver quick feedback to your PRs.
 
-Use these GitHub Actions to run your Android instrumentations or make use
+Use these GitHub Actions to run your Android instrumentation tests or make use
 of our emulators directly via an ADB connection.
 
 ## `emulator-wtf/actions/run-tests`
