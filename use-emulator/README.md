@@ -1,4 +1,4 @@
-# Use emulator session with emulator.wtf
+# `emulator-wtf/actions/use-emulator`
 
 Emulator.wtf is an Android cloud emulator laser-focused on performance to
 deliver quick feedback to your PRs.

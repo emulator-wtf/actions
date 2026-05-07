@@ -1,4 +1,4 @@
-# emulator.wtf GitHub Action
+# `emulator-wtf/actions/run-tests`
 
 Emulator.wtf is an Android cloud emulator laser-focused on performance to
 deliver quick feedback to your PRs.

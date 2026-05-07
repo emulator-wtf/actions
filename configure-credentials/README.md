@@ -1,4 +1,4 @@
-# Configure emulator.wtf credentials
+# `emulator-wtf/actions/configure-credentials`
 
 Emulator.wtf is an Android cloud emulator laser-focused on performance to
 deliver quick feedback to your PRs.
