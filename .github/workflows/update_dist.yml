@@ -18,17 +18,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout main
-      uses: actions/checkout@v6
+      # zizmor: ignore[artipacked]
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       with:
         path: source
 
     - name: Setup Node
-      uses: actions/setup-node@v6.3.0
+      uses: actions/setup-node@v6.3.0 # zizmor: ignore[unpinned-uses] immutable tag
       with:
         node-version: '24'
 
     - name: Setup mise
-      uses: jdx/mise-action@v4
+      uses: jdx/mise-action@v4.0.1 # zizmor: ignore[unpinned-uses] immutable tag
       with:
         install: false
 
@@ -36,8 +37,10 @@ jobs:
       working-directory: source
       run: mise dist
 
+
     - name: Checkout dist branch
-      uses: actions/checkout@v6
+      # zizmor: ignore[artipacked]
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       with:
         ref: dist
         path: dist-branch
