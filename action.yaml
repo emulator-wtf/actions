@@ -1,0 +1,12 @@
+name: 'emulator.wtf'
+author: 'emulator.wtf'
+description: 'A collection of actions to test your project with emulator.wtf.'
+branding:
+  color: orange
+  icon: smartphone
+runs:
+  using: 'composite'
+  steps:
+    - shell: bash
+      run: |
+        echo "Use 'emulator-wtf/actions/run-tests' to run your tests, 'emulator-wtf/actions/use-emulator' to obtain an emulator or 'emulator-wtf/actions/configure-credentials' to use an OIDC token" && false
