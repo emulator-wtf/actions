@@ -14,7 +14,7 @@ to authenticate with emulator.wtf and obtain temporary credentials.
    [emulator.wtf web app](https://emulator.wtf).
 2. Add `id-token: write` permission to your workflow YAML. You'll most likely
    want the `contents: read` permission too to check out your repository.
-   
+
    ```yaml
    permissions:
      contents: read
@@ -25,7 +25,7 @@ to authenticate with emulator.wtf and obtain temporary credentials.
    configuration ID added in step 1.
 
    ```yaml
-   - uses: emulator-wtf/actions/configure-credentials@v1
+   - uses: emulator-wtf/actions/configure-credentials@v1.0.0
      with:
        oidc-configuration-id: **OIDC-CONFIGURATION-ID-GOES-HERE**
    ```
@@ -59,8 +59,8 @@ jobs:
     - uses: actions/setup-java@v5
       with:
         distribution: 'zulu'
-        java-version: '24'
-    - uses: emulator-wtf/actions/configure-credentials@v1
+        java-version: '25'
+    - uses: emulator-wtf/actions/configure-credentials@v1.0.0
       with:
         oidc-configuration-id: **OIDC-CONFIGURATION-ID-GOES-HERE**
     - run: ./gradlew testWithEmulatorWtf
