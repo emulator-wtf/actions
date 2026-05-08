@@ -18,10 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout main
-      # zizmor: ignore[artipacked]
       uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       with:
         path: source
+        persist-credentials: false
 
     - name: Setup Node
       uses: actions/setup-node@v6.3.0 # zizmor: ignore[unpinned-uses] immutable tag
@@ -40,10 +40,10 @@ jobs:
 
     - name: Checkout dist branch
       uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      # zizmor: ignore[artipacked]
       with:
         ref: dist
         path: dist-branch
-        persist-credentials: false
 
     - name: Sync files to dist branch
       run: |
