@@ -32,13 +32,15 @@ jobs:
             model=Pixel2,version=33,gpu=auto
       - name: Make use of emulators
         env:
-          ADB: ${{ steps.ew-cli.outputs.adb_attached }}
+          ADB_ATTACHED: ${{ steps.ew-cli.outputs.adb_attached }}
+          ADB_ATTACHED_JSON: ${{ steps.ew-cli.outputs.adb_attached_json }}
+          ADB_PORT_FORWARDED: ${{ steps.ew-cli.outputs.adb_port_forwarded }}
+          ADB_PORT_FORWARDED_JSON: ${{ steps.ew-cli.outputs.adb_port_forwarded_json }}
         run: |
-          echo "Attached ${{ steps.ew-cli.outputs.adb_attached }}"
-          echo "Attached json ${{ steps.ew-cli.outputs.adb_attached_json }}"
-          echo "Forwarded ${{ steps.ew-cli.outputs.adb_port_forwarded }}"
-          echo "Forwarded json ${{ steps.ew-cli.outputs.adb_port_forwarded_json }}"
-          echo "From env: $ADB"
+          echo "Attached ${ADB_ATTACHED}"
+          echo "Attached json ${ADB_ATTACHED_JSON}"
+          echo "Forwarded ${ADB_PORT_FORWARDED}"
+          echo "Forwarded json ${ADB_PORT_FORWARDED_JSON}"
 ```
 
 ## Inputs

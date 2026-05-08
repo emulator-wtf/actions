@@ -20,12 +20,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      with:
+        persist-credentials: false
     - name: Setup Node
-      uses: actions/setup-node@v6.3.0
+      uses: actions/setup-node@v6.3.0 # zizmor: ignore[unpinned-uses] immutable tag
       with:
         node-version: '24'
-    - uses: jdx/mise-action@v4
+    - uses: jdx/mise-action@v4.0.1 # zizmor: ignore[unpinned-uses] immutable tag
       with:
         install: false
     - run: mise dist
@@ -35,11 +37,16 @@ jobs:
     - uses: ./use-emulator
       id: ew-cli
     - name: Print adb ports
+      env:
+        ADB_ATTACHED: ${{ steps.ew-cli.outputs.adb_attached }}
+        ADB_ATTACHED_JSON: ${{ steps.ew-cli.outputs.adb_attached_json }}
+        ADB_PORT_FORWARDED: ${{ steps.ew-cli.outputs.adb_port_forwarded }}
+        ADB_PORT_FORWARDED_JSON: ${{ steps.ew-cli.outputs.adb_port_forwarded_json }}
       run: |
-        echo "Attached ${{ steps.ew-cli.outputs.adb_attached }}"
-        echo "Attached json ${{ steps.ew-cli.outputs.adb_attached_json }}"
-        echo "Forwarded ${{ steps.ew-cli.outputs.adb_port_forwarded }}"
-        echo "Forwarded json ${{ steps.ew-cli.outputs.adb_port_forwarded_json }}"
+        echo "Attached ${ADB_ATTACHED}"
+        echo "Attached json ${ADB_ATTACHED_JSON}"
+        echo "Forwarded ${ADB_PORT_FORWARDED}"
+        echo "Forwarded json ${ADB_PORT_FORWARDED_JSON}"
     - name: Validate adb connection
       run: |
         $ANDROID_HOME/platform-tools/adb shell whoami
