@@ -27,7 +27,7 @@
     "eslint": "^9.39.2",
     "eslint-config-love": "^153.0.0",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-n": "^17.24.0",
+    "eslint-plugin-n": "^18.0.1",
     "eslint-plugin-promise": "^7.2.1",
     "globals": "^17.5.0",
     "prettier": "3.8.3",
