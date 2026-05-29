@@ -1,0 +1,1 @@
+import{k as t,i}from"./utils-BQ8ubrV8.js";import{g as o,c as a}from"./shared-inputs-Sne259fm.js";function r(){const r=o(),s=a();return{token:t("api-token"),outputsDir:t("outputs-dir"),outputs:t("outputs"),recordVideo:i("record-video"),maxTimeLimit:t("max-time-limit"),adbEnabled:i("adb"),adbBinary:t("adb-binary"),...r,...s}}export{r as g};
