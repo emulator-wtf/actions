@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: emulator-wtf/actions/use-emulator@v1.0.0
+      - uses: emulator-wtf/actions/use-emulator@v1.0.1
         id: ew-cli
         with:
           devices: |
