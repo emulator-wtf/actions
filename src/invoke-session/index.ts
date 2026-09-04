@@ -94,7 +94,7 @@ export async function cleanupInvokeSession(): Promise<void> {
   const pids = getProcessTree(pid, 0);
   info(`Killing ${pids.length} processes`);
   // reverse pids so that child processes get the signal first
-  pids.reverse().forEach((p, _) => {
+  pids.reverse().forEach((p) => {
     const killProcess = spawnSync("kill", ["-2", p], { encoding: "ascii" });
     info(`kill ${p} returned ${killProcess.status}`);
   });
@@ -126,9 +126,7 @@ async function waitForProcessExit(
   await waitForProcessExit(pid, totalAttempts, attempt + 1, delayMs);
 }
 
-// eslint-disable-next-line @typescript-eslint/promise-function-async
 function sleep(ms: number): Promise<void> {
-  // eslint-disable-next-line promise/avoid-new,@typescript-eslint/strict-void-return,no-promise-executor-return
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
@@ -139,7 +137,7 @@ function getProcessTree(pid: string, currentDepth: number): string[] {
   }
   const child = spawnSync("pgrep", ["-P", pid], { encoding: "ascii" });
   if (child.status === 0) {
-    child.stdout.split("\n").forEach((p, index) => {
+    child.stdout.split("\n").forEach((p) => {
       if (p.trim().length > 0) {
         pids.push(...getProcessTree(p, currentDepth + 1));
       }
@@ -169,13 +167,12 @@ async function waitForJson(
   adbEnabled: boolean,
   numberOfDevices: number,
 ): Promise<AdbPortOutputs | null> {
-  // eslint-disable-next-line promise/avoid-new
   return await new Promise((resolve) => {
     const attachedEvents: EwCliOutput[] = [];
     const forwardedEvents: EwCliOutput[] = [];
     stdout.on("data", (data) => {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion,@typescript-eslint/no-unsafe-argument
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         const ewCliEvent: EwCliOutput = JSON.parse(data) as EwCliOutput;
         switch (ewCliEvent.type) {
           case "adb_attached":
