@@ -1,26 +1,31 @@
-import config from 'eslint-config-love'
+import js from '@eslint/js'
+import { defineConfig } from 'eslint/config'
 import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
 // noinspection JSUnusedGlobalSymbols
-export default [
+export default defineConfig([
   {
+    files: ['src/**/*.ts'],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommendedTypeChecked,
+      tseslint.configs.stylisticTypeChecked,
+    ],
     languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
       globals: {
-        ...globals.es2021
-      }
-    }
-  },
-  config,
-  {
-    files: ["src/**/*.ts"],
+        ...globals.node,
+      },
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    linterOptions: {
+      reportUnusedDisableDirectives: 'error',
+    },
     rules: {
-      '@typescript-eslint/no-magic-numbers': 'off',
-      '@eslint-community/eslint-comments/require-description': 'off',
-      'complexity': 'off',
-      'no-console': 'off',
-      'eqeqeq': ['error', 'smart'],
-    }
-  }
-];
+      eqeqeq: ['error', 'smart'],
+    },
+  },
+])
