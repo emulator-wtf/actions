@@ -2,6 +2,7 @@ import js from '@eslint/js'
 import { defineConfig } from 'eslint/config'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
+import eslintConfigPrettier from 'eslint-config-prettier/flat'
 
 // noinspection JSUnusedGlobalSymbols
 export default defineConfig([
@@ -24,6 +25,9 @@ export default defineConfig([
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
     },
+  },
+  eslintConfigPrettier,
+  {
     rules: {
       eqeqeq: ['error', 'smart'],
     },
