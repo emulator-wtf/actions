@@ -70,7 +70,8 @@ jobs:
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
-        MAIN_SHA="${{ github.sha }}"
+        ORIGINAL_COMMIT_SHA="${{ github.sha }}"
+        ORIGINAL_COMMIT_MSG="$(git -C ../source log -1 --format=%B "$ORIGINAL_COMMIT_SHA")"
 
         git add -A
 
@@ -80,5 +81,5 @@ jobs:
           exit 0
         fi
 
-        git commit -m "ci: build latest dist from ($MAIN_SHA)"
+        printf 'build(dist): %s\n\nSource-Commit: %s\n' "$ORIGINAL_COMMIT_MSG" "$ORIGINAL_COMMIT_SHA" | git commit -F -
         git push origin HEAD:dist
