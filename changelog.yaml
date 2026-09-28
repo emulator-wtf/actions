@@ -4,14 +4,4 @@
 # - "Made `thingamajig` faster, read more [here](https://example.com)."
 #
 # (Markdown is supported and encouraged)
-unreleased:
-- |
-  New: you can now pass/override SCM information to the action via environment variables. The following environment variables are supported:
-  - `EW_SCM_URL` - Source control repository URL of the test run
-  - `EW_SCM_COMMIT` - Commit identifier of the test run (hash)
-  - `EW_SCM_PR_URL` - Pull request URL for the test run
-  - `EW_SCM_REF_NAME` - Current branch/tag name
-
-  Note that typically the values for these will be guessed automatically by the action, but in some cases
-  you may want to override them.
-- "Maintenance: bumped default `ew-cli` version to 1.5.1."
+unreleased: []
