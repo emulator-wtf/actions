@@ -4,4 +4,7 @@
 # - "Made `thingamajig` faster, read more [here](https://example.com)."
 #
 # (Markdown is supported and encouraged)
-unreleased: []
+unreleased:
+- |
+  New: `emulator-wtf/actions/run-maestro` runs your [Maestro](https://maestro.dev) flows with emulator.wtf,
+  see [run-maestro/README.md](https://github.com/emulator-wtf/actions/blob/main/run-maestro/README.md) for usage.

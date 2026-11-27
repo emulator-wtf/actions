@@ -56,6 +56,8 @@ jobs:
         cp -a ../source/configure-credentials .
         cp -a ../source/invoke .
         cp -a ../source/invoke-session .
+        cp -a ../source/invoke-maestro .
+        cp -a ../source/run-maestro .
         cp -a ../source/run-tests .
         cp -a ../source/setup-ew-cli .
         cp -a ../source/use-emulator .

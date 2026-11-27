@@ -10,6 +10,8 @@ export default defineConfig({
     'invoke/main': 'src/invoke/main.ts',
     'invoke-session/main': 'src/invoke-session/main.ts',
     'invoke-session/cleanup': 'src/invoke-session/cleanup.ts',
+    'invoke-maestro/main': 'src/invoke-maestro/main.ts',
+    'run-maestro/main': 'src/run-maestro/main.ts',
     'run-tests/main': 'src/run-tests/main.ts',
     'setup-ew-cli/main': 'src/setup-ew-cli/main.ts',
     'use-emulator/main': 'src/use-emulator/main.ts',

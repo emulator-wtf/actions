@@ -1,0 +1,4 @@
+# Smoke flow for the run-maestro action test: launches the public minimal sample app.
+appId: wtf.emulator.sample
+---
+- launchApp

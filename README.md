@@ -3,8 +3,8 @@
 [Emulator.wtf](https://emulator.wtf) is an Android cloud emulator laser-focused
 on performance to deliver quick feedback to your PRs.
 
-Use these GitHub Actions to run your Android instrumentation tests or make use
-of our emulators directly via an ADB connection.
+Use these GitHub Actions to run your Android instrumentation tests or Maestro
+flows, or make use of our emulators directly via an ADB connection.
 
 ## `emulator-wtf/actions/run-tests`
 
@@ -47,6 +47,44 @@ jobs:
 
 See the full list of inputs and additional examples in
 [run-tests/README.md](run-tests/README.md).
+
+## `emulator-wtf/actions/run-maestro`
+
+Run your [Maestro](https://maestro.dev) flows with emulator.wtf, optionally
+with multiple shards.
+
+### Quick usage
+
+```yaml
+name: Run Maestro flows
+on: push
+jobs:
+  run-maestro:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '25'
+      - name: Build app
+        run: ./gradlew assembleDebug
+      - name: Run Maestro flows
+        uses: emulator-wtf/actions/run-maestro@v1.2.6
+        with:
+          api-token: ${{ secrets.EW_API_TOKEN }}
+          workspace: .maestro
+          app: app/build/outputs/apk/debug/app-debug.apk
+          outputs-dir: build/test-results
+      - name: Publish test report
+        uses: mikepenz/action-junit-report@v6
+        if: always() # always run even if the flows fail
+        with:
+          report_paths: 'build/test-results/**/*.xml'
+```
+
+See the full list of inputs and additional examples in
+[run-maestro/README.md](run-maestro/README.md).
 
 ## `emulator-wtf/actions/use-emulator`
 
